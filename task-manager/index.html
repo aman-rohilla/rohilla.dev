@@ -1319,6 +1319,15 @@ observer.observe(centerItem);
   }
   // startLoader()  
 
+  const isTokenExpired = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
+      if(res.data.expired==true) {
+        await logout_user()
+      }
+    } catch (error) {}
+  }
+  $(document).ready(isTokenExpired)
 
   const startUp = async () => {
     let username = localStorage.getItem('username')
