@@ -117,7 +117,7 @@
   </ul>
   
   
-<pre class="my-1"><strong style="font-size: 14px;">Base URL : rohilla.co.in/task-manager</strong></pre>
+<pre class="my-1"><strong style="font-size: 14px;">Base URL : rohilla-co-in.herokuapp.com/task-manager</strong></pre>
 <pre class="mb-0" style="font-size: 14px;">
   POST   /api     - create a task
   GET    /api/:id - get a task by id
@@ -1318,16 +1318,6 @@ observer.observe(centerItem);
     toggleCenterContent(loadingDiv.innerHTML)
   }
   // startLoader()  
-
-  const isTokenExpired = async () => {
-    try {
-      const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
-      if(res.data.expired==true) {
-        await logout_user()
-      }
-    } catch (error) {}
-  }
-  $(document).ready(isTokenExpired)
 
 
   const startUp = async () => {
