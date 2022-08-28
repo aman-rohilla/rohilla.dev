@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- <link rel="stylesheet" href="/cdn/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="/cdn/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="/cdn/mdb.min.css" />
+
+    <link rel="icon" type="image/png" href="/assets/img/site/logo.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/assets/img/site/logo.png" sizes="16x16" />
+    <title>Task Manager</title>
+  
+  <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      /* justify-content: center; */
+    }
+
+    #center-item-outer {
+      height: calc(100% - var(--navbar-height));
+      /* height: auto; */
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    #navbar {
+      width: 100%;
+    }
+    
+    .rohilla:hover {
+      color: rgba(0, 255, 255, 0.775) !important;
+    }
+    .nav-link:hover {
+      color: rgb(159, 203, 200) !important;    
+    }
+
+    .popover {
+      background-color: rgb(167, 208, 221);
+      border: 2px solid darkcyan;
+      width: 98vw;
+      max-width: 500px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      margin-top: 15px;
+    }
+    .bs-popover-auto[x-placement^=bottom] .arrow::after, .bs-popover-bottom .arrow::after {
+      top: 1px;
+      border-bottom-color: rgb(167, 208, 221);
+    }
+
+  </style>
+
+</head>
+
+<body onload="center()" class="bg-dark">
+
+  <nav class="navbar navbar-expand-sm navbar-dark" id="navbar" style="background-color: rgb(21, 21, 21); border-bottom: 1px solid white;">
+    <a class="navbar-brand rohilla" href="/" target="_blank" style="color: cyan;">Rohilla</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon">
+        <i class="fa-solid fa-bars"></i>
+      </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <div class="nav-link" href="/task-manager" style="color: lightcyan;">Task Manager</div>
+        </li>
+        <li class="nav-item" id="popover-btn">
+          <span class="nav-link" style="color: lightcyan; cursor: pointer;" data-mdb-placement="bottom" 
+          tabindex="0" data-mdb-toggle="popover" data-mdb-container="body" 
+          data-html="true" data-toggle="popover" id="popover">Docs</span>
+        </li>
+
+      </ul>
+
+      <ul id="user-div" class="navbar-nav ml-auto d-none">
+        <li class="nav-item my-2 mr-2">
+          <span style="color: lightblue;">Welcome, </span>
+          <span id="username" style="color: lightseagreen; font-weight: 600;">username</span>
+        </li>
+
+        <li class="nav-item collapse-item">
+          <button onclick="logout()" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
+        </li>
+        
+      </ul>
+
+
+    </div>
+  </nav>
+
+<div id="popover-content" style="display: none;">
+  
+  <h6 style="color: #212529;"><em><strong>API</strong></em></h6>
+  <ul class="pl-3" style="color: #212529; font-size: 14px; text-align: justify;">
+  <li>Create an account on rohilla.co.in for testing the Task Manager API </li>
+  <li>Send a GET request to /task-manager/api/auth/token to get the Bearer type access token by sending your email and password as json in request body </li>
+  <li>A task has two parameters - name=string and completed=boolean </li>
+  </ul>
+  
+  
+<pre class="my-1"><strong style="font-size: 14px;">Base URL : rohilla.co.in/task-manager</strong></pre>
+<pre class="mb-0" style="font-size: 14px;">
+  POST   /api     - create a task
+  GET    /api/:id - get a task by id
+  PATCH  /api/:id - update a task by id
+  DELETE /api/:id - delete a task by id
+  GET    /api     - get all tasks
+  DELETE /api     - delete all tasks
+  PATCH  /api     - mark/unmark all tasks</pre>
+
+<div style="border-top: 2px solid rgb(45, 115, 138); margin: 15px -17px;"></div>
+
+<div class="container d-flex justify-content-between align-items-center">
+  <a href="https://github.com/aman-rohilla/Task-Manager" class="btn btn-primary btn-sm" target="_blank" style="background-color: rgb(13, 121, 116);">
+    <i class="fa-brands fa-github fa-xl mr-1"></i>
+    <span>Git Repo</span>  
+  </a>
+
+  <button type="button" class="btn btn-primary btn-sm" onclick="$('#popover').trigger('click');">
+    <i class="fa-solid fa-xmark fa-lg mr-1"></i>
+    Close
+  </button>
+</div>
+
+</div>
+  
+
+  <div id="login-form-div" style="display: none;">
+    <div class="container px-4 py-4">
+      <div class="card shadow text-dark mb-3 col-md-6"
+        style="margin-left: auto; margin-right: auto; max-width: 400px; background-color: rgb(249, 147, 147);">
+
+        <div class="row">
+          <form style="box-shadow: coral 0px 19px 38px" class="login-form rounded" onsubmit="event.preventDefault(); loginHandler(this);">
+            <div class="card-header text-dark" style="font-size: 1.3rem;">Login to use Task Manager</div>
+            <div class="card-body px-1 ">
+              <style>
+                .login-email, .login-pass, .login-email:focus, .login-pass:focus {
+                  background-color: rgb(255, 210, 210);          
+                }
+              </style>
+
+              <div class="alerts"></div>
+    
+              <div class="form-floating my-3">
+                <input type="text" class="form-control login-email" placeholder="name@example.com" name="email">
+                <label for="login-email">Email</label>
+              </div>
+              <div class="form-floating my-3">
+                <input type="password" class="form-control login-pass" placeholder="Password">
+                <label for="login-pass">Password</label>
+              </div>
+    
+              <!-- <div class="row pt-2">
+                <div class="col justify-content-center text-center">
+                  <button class="btn btn-danger btn-block text-white login-form-btn" type="submit">Sign In</button>
+                </div>
+              </div> -->
+
+
+              <div class="justify-content-center pt-2">
+
+                <button type="submit" class="btn btn-danger btn-block text-white d-flex login-form-btn justify-content-start align-items-center" style="height: 40px;">
+                  <div class="clearfix" style="width: 33%;">
+                    <span class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  </div>
+                  <div class="px-0" style="width: 34%; font-size: 14px;">Sign In</div>
+                </button>  
+      
+              </div>
+
+
+
+
+
+            </div>
+
+            <div class="card-footer px-2">
+              <div class="d-flex justify-content-between align-items-center my-2">
+                <div>Don't have an account ?</div>
+                <a href="/task-manager/signup.html">
+                  <button type="button" class="btn btn-info justify-content-center"
+                    style="width: 100px; background-color: rgb(163, 1, 120);">Sign Up</button>
+                </a>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="large-task-list-title" class="d-none">
+    <div class="d-flex justify-content-between align-items-center">
+
+      <div class="text-white" style="display: inline-block;">
+        <div class="my-0" style="font-size: 22px;">Task List</div>
+      </div>
+      
+      <div class="d-flex justify-content-center">
+        <div class="d-none spinner spinner-border spinner-border-sm my-auto mr-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+
+        <div class="btn-group my-2" role="group" aria-label="Basic example">
+          <button class="btn btn-sm px-2 py-2 btn-primary" data-toggle="modal" data-target="#add-task-modal">Add New</button>
+          <button class="btn btn-sm px-2 py-2 btn-success check-all" onclick="checkAllHandler(this)">Check All</button>
+          <button class="btn btn-sm px-2 py-2 btn-dark uncheck-all" onclick="uncheckAllHandler(this)">Uncheck All</button>
+          <button class="btn btn-sm px-2 py-2 btn-danger delete-all" onclick="deleteAllHandler(this)">Delete All</button>
+        </div> 
+      </div>
+
+    </div>
+  </div>
+
+  <div id="small-task-list-title" style="display: none;">
+    <div class="text-white d-flex" style="display: inline-block;">
+      <div class="my-0 py-2" style="font-size: 22px;">Task List</div>
+      <div class="d-none spinner spinner-border spinner-border-sm my-auto ml-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+    </div>
+      
+    <div class="d-flex">
+
+      <div class="btn-group my-2" role="group" aria-label="Basic example">
+        <button class="btn btn-sm px-2 py-2 btn-primary" data-toggle="modal" data-target="#add-task-modal">Add New</button>
+        <button class="btn btn-sm px-2 py-2 btn-success check-all" onclick="checkAllHandler(this)">Check All</button>
+        <button class="btn btn-sm px-2 py-2 btn-dark uncheck-all" onclick="uncheckAllHandler(this)">Uncheck All</button>
+        <button class="btn btn-sm px-2 py-2 btn-danger delete-all" onclick="deleteAllHandler(this)">Delete All</button>
+      </div> 
+    </div>
+  </div>
+
+
+  <div id="task-list-div" style="display: none;" >
+    <div class="container py-4" style="width: 100%; max-width: 700px;">
+      <div class="justify-content-center">
+        <!-- <div class="alerts"></div> -->
+
+        <ul class="list-group" style="border-radius: 10px;
+        box-shadow: coral 0px 19px 38px, coral 0px 6px 8px; padding: 0;">
+  
+
+        
+  
+          <li class="list-group-item task-list-title" style="background-color: darkcyan; padding-top: 12px; padding-bottom: 12px;">
+            
+            <div class="text-white d-flex" style="display: inline-block;">
+              <div class="my-0 py-2" style="font-size: 22px;">Task List</div>
+              <div class="d-none spinner spinner-border spinner-border-sm my-auto ml-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+            </div>
+              
+            <div class="d-flex">
+        
+              <div class="btn-group my-2" role="group" aria-label="Basic example">
+                <button class="btn btn-sm px-2 py-2 btn-primary" data-toggle="modal" data-target="#add-task-modal">Add New</button>
+                <button class="btn btn-sm px-2 py-2 btn-success check-all" onclick="checkAllHandler(this)">Check All</button>
+                <button class="btn btn-sm px-2 py-2 btn-dark uncheck-all" onclick="uncheckAllHandler(this)">Uncheck All</button>
+                <button class="btn btn-sm px-2 py-2 btn-danger delete-all" onclick="deleteAllHandler(this)">Delete All</button>
+              </div> 
+            </div>
+
+          </li>
+          
+          <li class="tasks" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+
+          </liv>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade px-2" id="edit-task-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+      <div class="modal-content" style="background-color: rgb(79, 131, 141); color: white;">
+        
+        <div class="modal-header">
+          <h6 class="modal-title" id="edit-task-title"></h6>
+          <button type="button" id="edit-task-modal-close-btn" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+  
+          <form id="edit-task-form">
+
+            <div id="edit-task-alerts"></div>
+            
+            <div class="form-group">
+              <input type="text" class="form-control form-input" id="edit-task-form-input" name="name" placeholder="Enter new name"
+                style="background-color: rgb(167, 216, 225);" required>
+            </div>
+  
+  
+            <div class="row mt-4 mb-2 text-center">
+              <!-- <div>
+                <button type="submit" id="edit-task-form-btn" class="btn btn-success justify-content-center"
+                  style="width: 200px; background-color: rgb(19, 163, 163);">Update</button>
+              </div> -->
+
+
+              <div class="d-flex justify-content-center">
+
+                <button id="edit-task-form-btn" type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px; background-color:rgb(19, 163, 163);">
+                  <div class="clearfix" style="width: 30%;">
+                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  </div>
+                  <div class="px-0" style="width: 40%; font-size: 14px;">Update</div>
+                </button>  
+      
+              </div>
+
+            </div>
+  
+          </form>
+  
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <div id="add-task-div" style="display: none;">
+    <div class="container py-4 px-3">
+      <div class="card shadow text-dark mb-3 col"
+        style="margin-left: auto; margin-right: auto; max-width: 500px; background-color: aquamarine;">
+
+        <div class="row">
+          <form class="add-a-task-form rounded" style="box-shadow: darkcyan 0px 19px 38px, darkcyan 0px 6px 8px;" onsubmit="event.preventDefault(); noTaskHandler(this);">
+            <div class="card-header text-dark">Add A Task</div>
+            <div class="card-body px-1">
+              
+              <div class="alerts"></div>
+
+              <div class="row align-items-center">
+                <div class="col">
+                  <input type="text" class="form-control" aria-describedby="passwordHelpInline" name="name"
+                    style="display: inline-block; background-color: rgb(77, 209, 165);" required>
+                </div>
+              </div>
+              
+              <!-- <div class="row mt-4 mb-0">
+              
+                <div class="col justify-content-center text-center">
+                  <button class="btn btn-success text-white" style="width: 200px;" type="submit">Submit</button>
+                </div>
+              
+              </div> -->
+
+
+              <div class="d-flex justify-content-center mt-4 mb-0">
+
+                <button type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px;">
+                  <div class="clearfix" style="width: 30%;">
+                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  </div>
+                  <div class="px-0" style="width: 40%; font-size: 14px;">Submit</div>
+                </button>  
+      
+              </div>
+
+
+
+
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+
+  
+  <div class="modal fade px-2" id="add-task-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+      <div class="modal-content" style="
+        margin-left: auto; margin-right: auto; max-width: 500px; background-color: aquamarine;
+        box-shadow: darkcyan 0px 19px 38px, darkcyan 0px 6px 8px;
+        ">
+        <div class="modal-header">
+          <h6 class="modal-title">Add New Task</h6>
+          <button type="button" id="add-task-modal-close-btn" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="add-task-form">
+
+            <div id="add-task-alerts"></div>
+
+            <div class="form-group">
+              <!-- <label for="login-user">Username</label> -->
+              <input type="text" class="form-control form-input" id="add-task-form-input" name="name" placeholder=""
+                style="background-color: rgb(77, 209, 165);" required>
+            </div>
+  
+            <div class="row mt-4 mb-2 text-center">
+              <!-- <div>
+                <button type="submit" class="btn btn-success justify-content-center"
+                  style="width: 200px; background-color: darkcyan;">Submit</button>
+              </div> -->
+
+              <div class="d-flex justify-content-center">
+
+                <button id="add-task-form-btn" type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px; background-color: darkcyan;">
+                  <div class="clearfix" style="width: 30%;">
+                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  </div>
+                  <div class="px-0" style="width: 40%; font-size: 14px;">Submit</div>
+                </button>  
+      
+              </div>
+
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
+
+  <style>
+    .loading {
+      width: 150px;
+      height: 150px;
+      border: 8px solid rgba(238, 238, 238, 0.912);
+      box-shadow: inset 0px 0px 8px 1px white, 0px 0px 8px 1px white;
+      border-radius: 50%;
+      border-top: 8px solid ;
+      animation: spin 1.8s linear infinite;
+      -webkit-animation: spin 1.8s linear infinite;
+    }
+    
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+  </style>
+
+
+  <div id="loading-div" class="d-none">
+    <div class="container px-4">
+
+      <div class="mx-auto py-4 text-center rounded d-flex flex-column justify-content-center align-items-center">
+
+        <div class="d-flex justify-content-center" style="height: 100px; align-items: baseline;">
+          <div class="px-3 py-2" style=" font-size: 17px; display: inline-block; border-radius: 10px; background-color: rgba(229, 231, 233, 0.858);color: rgb(5, 67, 67);">Fetching Tasks... </div>
+        </div>
+
+        <div class="loading mx-auto"></div>
+        
+        <div style="height: 100px;"></div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div id="failed-div" class="d-none">
+    <div class="container py-4 px-4 text-center">
+      <button type="button" class="btn btn-primary btn-lg" style="width: 150px; font-size: 14px; letter-spacing: 1px;" onclick="getAllTasks()">Retry</button>
+    </div>
+  </div>
+    
+
+
+
+
+
+
+
+<div style="position: absolute; bottom: 30px; right: 20px; z-index: 50;">
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-animation="true" style="width: 240px;">
+    <div class="toast-header d-flex justify-content-between align-items-center" style="background-color: rgb(255, 190, 165); color: rgb(113, 45, 18);">
+
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div class="px-1" style="font-size: 15px;">
+        Something went wrong
+      </div>
+      <button type="button" class="close" data-dismiss="toast" aria-label="Close" onclick="errorToast.toast('hide')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="center-item-outer">
+  <div id="center-item">
+
+  </div>  
+</div>
+
+
+<style>
+  #center-item {
+    /* height: 100%; */
+    width: 100%;
+  }
+
+  :root {
+    --taskSpinnerColor: rgba(47, 47, 47, 0.879);
+  }
+  .modal-open {
+    overflow:hidden;
+    overflow-y:auto;
+    padding-right:0 !important;
+    padding-left:0 !important;
+  }
+
+  .modal {
+    background-color: rgba(0, 0, 0, 0.581);
+  }
+  .completed-task {
+    background-color: rgb(160, 222, 160)
+  }
+</style>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/5396b23a54.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"></script> -->
+      
+<script src="/cdn/axios.min.js"></script>
+<script src="/cdn/fontawesome.js"></script>
+<script src="/cdn/jquery-3.3.1.js"></script>
+<script src="/cdn/popper.min.js"></script>
+<script src="/cdn/mdb.min.js"></script>
+<script src="/cdn/bootstrap.min.js"></script>
+
+
+
+<!-- Center script -->
+<script>
+  const navbar = document.getElementById('navbar')
+  // navbar.style.setProperty('display', 'none')
+  const navbarHeight = navbar.offsetHeight
+  if(navbar) {
+    document.documentElement.style.setProperty('--navbar-height', navbar.offsetHeight.toString()+'px')
+  }
+
+  const html = document.querySelector('html')
+  const centerItem = document.getElementById('center-item')
+
+  
+  function center() {
+    const centerItemHeight = centerItem ? centerItem.scrollHeight : 0
+    if(html.scrollHeight > window.innerHeight || centerItemHeight > window.innerHeight) {
+      html.style.setProperty('height', 'auto')
+    }
+    else {
+      html.style.setProperty('height', '100%')
+    }
+  }
+
+  let class_added = false
+
+  function center__() {
+    let navbarHeight = document.getElementById('navbar').offsetHeight
+    var div = document.getElementById('center-item');
+    if (div == null) return
+    var msg = document.getElementById('messages');
+    var mh = 0;
+    if(msg && msg.childElementCount>1) {
+      mh = msg.offsetHeight    
+    } 
+    var dh = div.offsetHeight;
+    var wh = window.innerHeight - navbarHeight - mh;
+    if(dh>wh) {
+      div.style.setProperty('margin-top', "20px");
+      return  
+    } 
+
+    div.style.setProperty('height', wh.toString()+"px");
+    if(class_added) return
+    div.classList.add('d-flex')
+    div.classList.add('justify-content-center')
+    div.classList.add('flex-column')
+    div.classList.add('align-items-center')
+    class_added = true
+  }
+
+
+</script>
+
+<script>
+  const loginFormDiv = document.getElementById('login-form-div')
+  const addTaskDiv   = document.getElementById('add-task-div')
+  const tasklistDiv  = document.getElementById('task-list-div')
+  const alertDiv     = document.getElementById('alert-div')
+  const failedDiv    = document.getElementById('failed-div')
+
+  let tasks = []
+
+  const baseURL = 'https://rohilla-co-in.herokuapp.com'
+
+</script>
+
+<script>
+  const tabID = Math.floor(Math.random() * 1000000);
+
+  const receiver = new BroadcastChannel('tab-communication');
+  receiver.addEventListener ('message', (e) => {
+    // console.log(e.data.message);
+    if (e.data.tabID != tabID) {
+      setTimeout(() => {
+        if(e.data.message == 'RELOAD')
+          window.location.reload()
+        else if(e.data.message == 'LOGOUT')
+          window.location = '/task-manager/logout'
+      }, e.data.delay)
+    }
+  });
+
+  const sender = new BroadcastChannel('tab-communication')
+  function sendRequest(msg='RELOAD', delay=0) {
+    sender.postMessage({tabID, message: 'RELOAD', delay})
+  }
+
+  async function logout() {
+    // sendRequest('LOGOUT', 100)
+    localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    await new Promise(resolve => setTimeout(resolve, 300))
+    toggle_user()
+    toggleCenterContent(loginFormDiv.innerHTML)
+    sendRequest()
+  }
+
+</script>
+<!-- {% if reload %} -->
+  <!-- <script>sendRequest()</script> -->
+<!-- {% endif %} -->
+
+
+<script>
+
+$('#popover').popover({
+  html: true,
+  trigger: 'click',
+  placement: 'bottom',
+  content: function () { return $('#popover-content').html(); }
+}).on('shown.bs.popover', (event)=>{
+  $('body').on('click', function (e) {
+    $('[data-toggle="popover"]').each(function () {
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).trigger('click');
+      }
+    });
+  });
+}).on('hidden.bs.popover', (event) => {
+  $('body').unbind('click')
+});
+
+
+$('.collapse-item').on('click',function() {
+  $('.navbar-collapse').collapse('hide');
+});
+
+let centerItemLastHeight = -1
+const observer = new ResizeObserver(entries => {
+  const height = entries[0].contentRect.height
+  if(height != centerItemLastHeight) {
+    centerItemLastHeight = height
+    center()
+  }
+})
+observer.observe(centerItem);
+
+  function toggleCenterContent(content) {
+    // if(centerItem.innerHTML.includes('<'))
+    //   $(centerItem).fadeOut('slow', function() {});
+    
+    centerItem.innerHTML = content
+    // $(centerItem).fadeIn(1000, function() {
+    //   $(this).html(content).fadeIn(2000, ()=>{})
+    // });
+    // await new Promise(resolve => setTimeout(resolve, 500))
+
+    // $(centerItem).animate({'opacity': 0}, 200, function(){
+    //     $(this).html(content).animate({'opacity': 1}, 400);    
+    // });
+
+  }
+
+</script>
+
+
+<script>
+
+  const editTaskModal          = $('#edit-task-modal')
+  const editTaskModalCloseBtn  = $('#edit-task-modal-close-btn')
+  const editTaskForm           = document.getElementById('edit-task-form')
+  const editTaskFormInput      = document.getElementById('edit-task-form-input')
+  const editTaskFormBtn        = document.getElementById('edit-task-form-btn')
+  
+  const addTaskModal           = $('#add-task-modal')
+  const addTaskModalCloseBtn   = $('#add-task-modal-close-btn')
+  const addTaskForm            = document.getElementById('add-task-form')
+  const addTaskFormInput       = document.getElementById('add-task-form-input')
+  const addTaskFormBtn         = document.getElementById('add-task-form-btn')
+
+  editTaskModal.on('shown.bs.modal', (event) => editTaskFormInput.focus())
+  editTaskModal.on('hidden.bs.modal', (event) => editTaskForm.reset())
+  
+  addTaskModal.on('shown.bs.modal', (event) => addTaskFormInput.focus())
+  addTaskModal.on('hidden.bs.modal', (event) => addTaskForm.reset())
+  
+  const editTaskModalSpinnerDiv = $('#edit-task-form-btn')
+  editTaskForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const alertDiv = 'edit-task-alerts'
+    const taskID = editTaskForm.getAttribute('taskID')
+    const name = editTaskFormInput.value
+
+    try {
+      startSpinner(null, editTaskModalSpinnerDiv)
+      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      stopSpinner(null, editTaskModalSpinnerDiv)    
+
+      if(res.data.status!='success') {
+        alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+      } else {
+        const index = tasks.findIndex((el) => el._id == taskID)
+        tasks[index].name = name
+        editTaskModalCloseBtn.trigger('click')
+        updateTaskName(taskID, name)
+      }
+    } catch (error) {
+      stopSpinner(null, editTaskModalSpinnerDiv)    
+      alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+    }
+
+  })
+
+
+
+  
+  const addTaskModalSpinnerDiv = $('#add-task-form-btn')
+  addTaskForm.addEventListener('submit', async (event) => {
+    event.preventDefault()    
+    const alertDiv = 'add-task-alerts'
+    const name = addTaskFormInput.value
+
+    try {
+      startSpinner(null, addTaskModalSpinnerDiv)
+      const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      stopSpinner(null, addTaskModalSpinnerDiv)    
+
+      const task = res.data.task
+      if(res.data.status!='success') {
+        alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+      } else {
+        addTaskModalCloseBtn.trigger('click')
+        addTask({_id: task._id, name: task.name, completed: false})
+      }
+    } catch (error) {
+      stopSpinner(null, addTaskModalSpinnerDiv)    
+      alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+    }
+
+  })
+  
+  let errorToast = null;
+
+  async function checkAllHandler(target) {
+
+    if(!tasks.find(task => task.completed==false))
+      return
+
+    const titleBtns = Array.from($(target.parentElement).find('button'))
+    const spinner = $(centerItem).find('.task-list-title').find('.spinner')
+    titleBtns.forEach(btn => btn.disabled = true)
+    spinner.removeClass('d-none')
+
+    try {  
+      errorToast.toast('hide')
+      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: true}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))        
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+      
+      if(res.data.status!='success') {
+        errorToast.toast('show')
+      } else {
+        for(let i=0; i<tasks.length; i++)
+          tasks[i].completed = true
+          
+        const taskItems = centerItem.querySelectorAll('.task-item');
+        taskItems.forEach(taskItem => updateTaskStatus(taskItem, true))
+      }
+    } catch (error) {
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+      errorToast.toast('show')
+    }
+  }
+
+  async function uncheckAllHandler(target) {
+
+    if(tasks.find(task => task.completed==false))
+      return
+
+    const titleBtns = Array.from($(target.parentElement).find('button'))
+    const spinner = $(centerItem).find('.task-list-title').find('.spinner')
+    titleBtns.forEach(btn => btn.disabled = true)
+    spinner.removeClass('d-none')
+
+    try {
+      errorToast.toast('hide')
+      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: false}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))        
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+
+      if(res.data.status!='success') {
+        errorToast.toast('show')
+      } else {
+        for(let i=0; i<tasks.length; i++)
+          tasks[i].completed = false
+
+        const taskItems = centerItem.querySelectorAll('.task-item');
+        taskItems.forEach(taskItem => updateTaskStatus(taskItem, false))
+      }
+    } catch (error) {
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+      errorToast.toast('show')
+    }
+  }  
+
+  async function deleteAllHandler(target) {
+    const titleBtns = Array.from($(target.parentElement).find('button'))
+    const spinner = $(centerItem).find('.task-list-title').find('.spinner')
+    titleBtns.forEach(btn => btn.disabled = true)
+    spinner.removeClass('d-none')
+
+    try {
+      errorToast.toast('hide')
+      const res = await axios.delete(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+      if(res.data.status!='success') {
+        errorToast.toast('show')
+      } else {
+        tasks = []
+        showAddATask()
+      }
+    } catch (error) {
+      spinner.addClass('d-none')
+      titleBtns.forEach(btn => btn.disabled = false)
+      errorToast.toast('show')
+    }
+
+  }
+
+  async function editBtnHandler(target) {
+    const taskItem = target.closest('.task-item');
+    taskID = taskItem.getAttribute("taskID");
+    taskName = taskItem.getAttribute("taskName");
+
+    editTaskForm.setAttribute('taskID', taskID)
+    document.getElementById('edit-task-title').innerHTML = taskName
+  }
+
+  async function completeBtnHandler(target) {
+    const taskItem = target.closest('.task-item');
+    taskID = taskItem.getAttribute("taskID");
+
+    const taskBtns = Array.from($(target.parentElement).find('button'))
+    const spinner = $(target.parentElement.parentElement).find('.spinner')
+    taskBtns.forEach(btn => btn.disabled = true)
+    spinner.removeClass('d-none')
+
+    const index = tasks.findIndex(task => task._id == taskID)
+    const completed = ! tasks[index].completed
+    
+    try {
+      errorToast.toast('hide')
+      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {completed}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))        
+      spinner.addClass('d-none')
+      taskBtns.forEach(btn => btn.disabled = false)
+      
+      if(res.data.status!='success') {
+        errorToast.toast('show')
+      } else {
+        tasks[index].completed = ! tasks[index].completed
+        updateTaskStatus(taskItem, completed)
+      }
+    } catch (error) {
+      spinner.addClass('d-none')
+      taskBtns.forEach(btn => btn.disabled = false)
+      errorToast.toast('show')
+    } 
+  }
+
+  async function deleteBtnHandler(target) {
+    const taskItem = event.target.closest('.task-item');
+    taskID = taskItem.getAttribute("taskID");
+    
+    const taskBtns = Array.from($(target.parentElement).find('button'))
+    const spinner = $(target.parentElement.parentElement).find('.spinner')
+    taskBtns.forEach(btn => btn.disabled = true)
+    spinner.removeClass('d-none')
+    
+    try {
+      errorToast.toast('hide')
+      const res = await axios.delete(`${baseURL}/task-manager/api/${taskID}`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve, 1000))        
+      spinner.addClass('d-none')
+      taskBtns.forEach(btn => btn.disabled = false)        
+      if(res.data.status!='success') {
+        errorToast.toast('show')
+      } else {
+        deleteTask(taskItem)
+      }
+    } catch (error) {
+      spinner.addClass('d-none')
+      taskBtns.forEach(btn => btn.disabled = false)
+      errorToast.toast('show')
+    }
+  }
+
+
+
+
+
+</script>
+
+<!-- functions -->
+<script>
+
+  function alertMessage(messages, element_id='', margin_bottom='2', margin_top='0', padding='5px', max_width='') {
+
+    let alertDiv = null
+    if(element_id=='')
+      alertDiv = centerItem.querySelector('.alerts')
+    else 
+      alertDiv = document.getElementById(element_id)
+
+    if(padding=='') padding = '5px'
+    if(margin_bottom=='') margin_bottom = '2'
+
+    const max_width_str = max_width ? `max-width: ${max_width};` : ''
+
+    const arr = Array.isArray(messages) ? messages : [messages]
+    let alert = ''
+
+    arr.forEach((message) => {
+      alert += 
+`<div class="container px-3 mb-${margin_top} mb-${margin_bottom} alert alert-${message.category} alert-dismissible fade show" role="alert" style="padding-top: ${padding}; padding-bottom: ${padding}; ${max_width_str}">
+
+  <div class="d-flex justify-content-between align-items-center"> 
+    <div class="message">${message.message}</div>
+    <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="position: relative; padding: 7px;">
+      <span aria-hidden="true">&times;</span>   
+    </button>
+  </div>
+</div>`      
+    })
+
+    alertDiv.innerHTML = alert
+  }
+
+  function clearAlerts(element_id) {
+    document.getElementById(element_id).innerHTML = ''
+  }
+
+  function startSpinner(container_id, div=null) {
+    if(!div) div = $(container_id)
+    div.prop("disabled", true);
+    div.find('.spinner').removeClass('d-none')
+  }
+  
+  function stopSpinner(container_id, div=null) {
+    if(!div) div = $(container_id)
+    div.find('.spinner').addClass('d-none')
+    div.prop("disabled", false);
+  }
+
+
+  async function getAllTasks() {
+    try {
+      // const res = await axios.post('https://rohilla-co-in.herokuapp.com/task-manager/api')
+      errorToast.toast('hide')
+      startLoader()
+      const res = await axios.get(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      // await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      if(res.data.status!='success') {
+        toggleCenterContent(failedDiv.innerHTML)
+        errorToast.toast('show')
+      } else {
+        tasks = res.data.tasks
+        if(!tasks.length) showAddATask()
+        else              showTasks()
+      }
+    } catch (error) {
+      toggleCenterContent(failedDiv.innerHTML)
+      errorToast.toast('show')
+    }
+  }
+
+  const categories = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']
+
+  function createTask(task, category) {
+    let taskStr = ''
+
+    if(task.completed) taskStr += 
+    `<li class="list-group-item list-item border border-success list-group-item-success completed-task" 
+    style="padding-right: 10px; padding-left: 15px;">`
+    else taskStr +=
+  `<li class="list-group-item list-item list-group-item-${category}"
+    style="padding-right: 10px; padding-left: 15px;">`
+
+    taskStr += 
+    `<div class="d-flex justify-content-between">
+        <div class="task-name" style="word-wrap: break-word; text-align: justify; width: 65%;">
+          ${task.name}
+        </div>
+
+        <div class="my-auto py-auto d-flex justify-content-end align-items-center">
+
+          <div class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: var(--taskSpinnerColor); margin-right: 12px;"></div>
+
+          <div taskID="${task._id}" taskName="${task.name}" class="btn-group float-right task-item" role="group" aria-label="Basic example">
+            <button class="btn icon btn-edit" data-toggle="modal"
+              data-target="#edit-task-modal" style="background-color: rgb(7, 155, 155); color: white; padding-left: 7px; padding-right: 7px;" onclick="editBtnHandler(this)">
+                <i class="fa-solid fa-pencil fa-xl"></i>
+            </button>`
+
+    const completeBtnCategory = task.completed ? 'success' : 'warning'
+    const completeBtnIcon     = task.completed ? 'fa-square-check' : 'fa-square'
+
+    taskStr +=
+              `<button class="btn btn-${completeBtnCategory} btn-complete" name="${task.name}" style="padding-left: 7px; padding-right: 7px;" onclick="completeBtnHandler(this)">
+                  <i class="fa-regular ${completeBtnIcon} fa-2xl"></i>
+              </button>
+              
+              <button class="btn btn-danger btn-delete" name="${task.name}" style="padding-left: 8px; padding-right: 8px;" onclick="deleteBtnHandler(this)">
+                  <i class="fa-solid fa-trash-can fa-xl"></i>
+              </button>
+
+          </div>
+        </div>
+      </div>
+    </li>
+
+
+    `
+    return taskStr
+  }
+
+
+
+  function showAddATask() {
+    toggleCenterContent(addTaskDiv.innerHTML)
+    centerItem.querySelector('input').focus()
+    return
+  }
+
+
+  function showTasks() {
+
+    if(!tasks.length) {
+      showAddATask()
+      return
+    }
+    let taskList = []
+    let categoryIndex = 0
+    tasks.forEach(task => {
+      taskList.unshift(createTask(task, categories[categoryIndex%categories.length]))
+      categoryIndex ++
+    })
+
+    toggleCenterContent(tasklistDiv.innerHTML)
+    centerItem.querySelector('.tasks').innerHTML = taskList.join('\n\n')
+    setTaskListTitle()
+  }
+
+  // showTasks()
+
+  function updateTaskName(taskID, name) {
+    $(centerItem).find(`div[taskID=${taskID}]`).parent().parent().find('.task-name').html(name)
+  }
+
+  function updateTaskStatus(taskItem, completed) {
+    const oldCompleteBtnCategory = completed ? 'btn-warning': 'btn-success'
+    const newCompleteBtnCategory = completed ? 'btn-success': 'btn-warning'
+    const oldCompleteBtnIcon     = completed ? 'fa-square' : 'fa-square-check'
+    const newCompleteBtnIcon     = completed ? 'fa-square-check' : 'fa-square'
+
+    $(taskItem).find('.'+oldCompleteBtnCategory).removeClass(oldCompleteBtnCategory).addClass(newCompleteBtnCategory)
+
+    $(taskItem).find('.'+oldCompleteBtnIcon).removeClass(oldCompleteBtnIcon).addClass(newCompleteBtnIcon)
+    
+    const taskID = taskItem.getAttribute("taskID");
+    const index = tasks.findIndex(task => task._id == taskID)
+    const container = $(centerItem).find(`div[taskID=${taskID}]`).parents('.list-group-item')
+    const classList = container.attr('class').split(' ').filter(cls => cls != '')
+    
+    if(completed) {
+      const oldClass = classList.find((cls) => cls.startsWith('list-group-item-'))
+      container.removeClass(oldClass)
+      container.addClass(['list-group-item-success', 'border', 'border-success', 'completed-task'])
+    } else {
+      container.removeClass(['list-group-item-success', 'border', 'border-success', 'completed-task'])
+      container.addClass('list-group-item-'+categories[index%categories.length])
+    }
+  }
+
+
+  function deleteTask(taskItem) {
+    const taskID = taskItem.getAttribute("taskID");    
+    const taskIndex = tasks.findIndex(task => task._id == taskID)
+    $(centerItem).find(`div[taskID=${taskID}]`).parents('.list-item').remove()
+    tasks.splice(taskIndex, 1)    
+    
+    if(!tasks.length) {
+      showAddATask()
+      return
+    }
+    
+    const taskList = $(centerItem).find('.list-item')
+
+    let categoryIndex = 0
+    for(let i=taskList.length-1; i>=0; i--) {
+      const container = taskList[i]
+      
+      const classList = container.getAttribute('class').split(' ').filter(cls => cls != '')
+      classList.splice(classList.findIndex(cls => cls.startsWith('list-group-item-')), 1)
+      classList.push('list-group-item-'+categories[categoryIndex%categories.length])
+      container.setAttribute('class', classList.join(' '))
+      categoryIndex ++
+    }
+
+  }
+
+
+  function addTask(task) {
+    tasks.push(task)
+    const taskStr = createTask(task, categories[(tasks.length-1) % categories.length ])
+    centerItem.querySelector('.tasks').prepend($.parseHTML(taskStr)[0])
+  }
+
+</script>
+
+
+<script>
+
+  function isEmailValid(email) {
+    const matches = email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    if(matches) return true
+    return false
+  }
+
+  const userDiv = $('#user-div')
+  const usernameDiv = $('#username')
+  function toggle_user(username='') {
+    if(!username) username = localStorage.getItem('username')
+    if(!username)
+      userDiv.addClass('d-none')
+    else {
+      usernameDiv.html(username)
+      userDiv.removeClass('d-none')
+    }
+  }
+  // toggle_user()
+
+
+
+
+
+
+
+  // getAllTasks()
+  function login_user(username) {
+    toggle_user(username)
+  }
+
+
+  async function loginHandler(target) {
+    const spinnerDiv = $(target).find('button[type=submit]')
+
+    const email    = target.querySelector('.login-email').value.trim()
+    const password = target.querySelector('.login-pass').value.trim()
+
+    if(!email || !password) {
+      return alertMessage({message: 'Some fields are empty', category: 'warning'})
+    }
+
+    let messages = []
+    if(! isEmailValid(email))
+      messages.push({message: 'Email is invalid', category: 'warning'})  
+  
+    if(password.length<8) 
+      messages.push({message: `Password is less than 8 characters`, category: 'warning'})
+
+    if(messages.length)
+      return alertMessage(messages)
+
+      try {
+      startSpinner(null, spinnerDiv)
+      const res = await axios.post(`${baseURL}/api/login`, { email, password})
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      stopSpinner(null, spinnerDiv)  
+
+      let message = res.data.message
+      
+      // console.log(res.data);
+      if(message)
+      alertMessage({message, category: res.data.category})
+      
+      if(res.data.status=='success') {
+        target.reset()
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('username', res.data.username)
+        sendRequest()
+        startUp()
+      }
+
+    } catch (error) {
+      stopSpinner(null, spinnerDiv)  
+      alertMessage({message: 'Something went wrong', category: 'danger'})
+    }
+  }
+
+  async function noTaskHandler(target) {
+    const spinnerDiv = $(target).find('button')
+    const name = target.querySelector('input').value
+    
+    try {
+      startSpinner(null,spinnerDiv)
+      const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      await new Promise(resolve => setTimeout(resolve,1000))
+      stopSpinner(null,spinnerDiv)
+
+      const task = res.data.task
+      if(res.data.status!='success') {
+        alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
+      } else {
+        tasks.unshift({_id: task._id, name: task.name, completed: false})
+        centerItem.querySelector('.add-a-task-form').reset() ////
+        showTasks()
+      }
+    } catch (error) {
+      stopSpinner(null,spinnerDiv)
+      alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
+    }
+  }
+
+
+
+
+  const smallTaskListTitle = document.getElementById('small-task-list-title')
+  const largeTaskListTitle = document.getElementById('large-task-list-title')
+
+  function setTaskListTitle() {
+    const titleDiv = centerItem.querySelector('.task-list-title')
+    if(!titleDiv) return
+
+    if (titleDiv.offsetWidth > 600)
+      titleDiv.innerHTML = largeTaskListTitle.innerHTML
+    else 
+      titleDiv.innerHTML = smallTaskListTitle.innerHTML
+    }
+
+
+  window.addEventListener('resize', setTaskListTitle);
+  
+  const loadingDiv = document.getElementById('loading-div')
+  const startLoader = () => {
+    toggleCenterContent(loadingDiv.innerHTML)
+  }
+  // startLoader()  
+
+  const isTokenExpired = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
+      if(res.data.expired==true) {
+        await logout_user()
+      }
+    } catch (error) {}
+  }
+  $(document).ready(isTokenExpired)
+
+
+  const startUp = async () => {
+    let username = localStorage.getItem('username')
+    toggle_user(username)
+    if(!username) {
+      toggleCenterContent(loginFormDiv.innerHTML)
+    } else {
+      if(localStorage.getItem('signup')) {
+        localStorage.removeItem('signup')
+        showAddATask()
+        return
+      }
+
+      await getAllTasks()
+      setTaskListTitle()
+    }
+  }
+
+  $(document).ready(() => {
+    errorToast = $('.toast')
+    startUp()
+  })
+
+  // event.preventDefault(); editTaskHandler(this);
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
