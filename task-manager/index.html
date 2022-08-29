@@ -1056,7 +1056,7 @@ observer.observe(centerItem);
       errorToast.toast('hide')
       startLoader()
       const res = await axios.get(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      // await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       if(res.data.status!='success') {
         toggleCenterContent(failedDiv.innerHTML)
