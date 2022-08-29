@@ -98,7 +98,7 @@
         </li>
 
         <li class="nav-item collapse-item">
-          <button onclick="logout()" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
+          <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
         </li>
         
       </ul>
@@ -644,27 +644,54 @@
     // console.log(e.data.message);
     if (e.data.tabID != tabID) {
       setTimeout(() => {
-        if(e.data.message == 'RELOAD')
-          window.location.reload()
-        else if(e.data.message == 'LOGOUT')
-          window.location = '/task-manager/logout'
+
+        if(e.data.message == 'LOGIN') {
+          login_user()
+          startUp()
+        } else if(e.data.message == 'LOGOUT') {
+          logout_user()
+        } else if(e.data.message == 'SIGNUP') {
+          login_user()
+          showAddATask()
+        }
+
+        // if(e.data.message == 'RELOAD')
+        //   window.location.reload()
+        // else if(e.data.message == 'LOGOUT')
+        //   window.location = '/task-manager/logout'
       }, e.data.delay)
     }
   });
 
   const sender = new BroadcastChannel('tab-communication')
-  function sendRequest(msg='RELOAD', delay=0) {
-    sender.postMessage({tabID, message: 'RELOAD', delay})
+  function sendRequest(message='RELOAD', delay=0) {
+    sender.postMessage({tabID, message, delay})
   }
 
-  async function logout() {
+  const userDiv = $('#user-div')
+  const usernameDiv = $('#username')
+  function toggle_user(username='') {
+    if(!username) username = localStorage.getItem('username')
+    if(!username)
+      userDiv.addClass('d-none')
+    else {
+      usernameDiv.html(username)
+      userDiv.removeClass('d-none')
+    }
+  }
+
+  function login_user(username) {
+    toggle_user(username)
+  }
+
+  async function logout_user() {
     // sendRequest('LOGOUT', 100)
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     await new Promise(resolve => setTimeout(resolve, 300))
     toggle_user()
     toggleCenterContent(loginFormDiv.innerHTML)
-    sendRequest()
+    // sendRequest()
   }
 
 </script>
@@ -1198,31 +1225,6 @@ observer.observe(centerItem);
     return false
   }
 
-  const userDiv = $('#user-div')
-  const usernameDiv = $('#username')
-  function toggle_user(username='') {
-    if(!username) username = localStorage.getItem('username')
-    if(!username)
-      userDiv.addClass('d-none')
-    else {
-      usernameDiv.html(username)
-      userDiv.removeClass('d-none')
-    }
-  }
-  // toggle_user()
-
-
-
-
-
-
-
-  // getAllTasks()
-  function login_user(username) {
-    toggle_user(username)
-  }
-
-
   async function loginHandler(target) {
     const spinnerDiv = $(target).find('button[type=submit]')
 
@@ -1260,7 +1262,7 @@ observer.observe(centerItem);
         await new Promise(resolve => setTimeout(resolve, 1000));
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('username', res.data.username)
-        sendRequest()
+        sendRequest('LOGIN')
         startUp()
       }
 
@@ -1331,16 +1333,10 @@ observer.observe(centerItem);
 
   const startUp = async () => {
     let username = localStorage.getItem('username')
-    toggle_user(username)
+    toggle_user()
     if(!username) {
       toggleCenterContent(loginFormDiv.innerHTML)
     } else {
-      if(localStorage.getItem('signup')) {
-        localStorage.removeItem('signup')
-        showAddATask()
-        return
-      }
-
       await getAllTasks()
       setTaskListTitle()
     }

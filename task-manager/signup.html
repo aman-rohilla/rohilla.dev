@@ -246,31 +246,29 @@
     const tabID = Math.floor(Math.random() * 1000000);
 
     const receiver = new BroadcastChannel('tab-communication');
-    receiver.addEventListener('message', (e) => {
-      console.log(e.data.message);
+    receiver.addEventListener ('message', (e) => {
       if (e.data.tabID != tabID) {
         setTimeout(() => {
-          if (e.data.message == 'RELOAD')
-            window.location.reload()
-          else if (e.data.message == 'LOGOUT')
-            window.location = '/task-manager/logout'
+
+          if(e.data.message == 'LOGIN' || e.data.message == 'SIGNUP') {
+            window.location = '/task-manager'
+          }
+          // if(e.data.message == 'RELOAD') {
+          //   window.location.reload()
+          // }
+          // else if(e.data.message == 'LOGOUT')
+          //   window.location = '/task-manager/logout'
         }, e.data.delay)
       }
     });
 
     const sender = new BroadcastChannel('tab-communication')
-    function sendRequest(msg = 'RELOAD', delay = 0) {
-      sender.postMessage({ tabID, message: 'RELOAD', delay })
-    }
-
-    function logout() {
-      // sendRequest('LOGOUT', 100)
-      window.location = '/task-manager/logout'
+    function sendRequest(message = 'RELOAD', delay = 0) {
+      sender.postMessage({ tabID, message, delay })
     }
 
   </script>
 
-<!-- <script>sendRequest()</script> -->
 
   <script>
     $('#popover').popover({
@@ -393,10 +391,9 @@ function startSpinner(container_id) {
           e.target.reset()
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('username', res.data.username)
-          localStorage.setItem('signup', true)
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          sendRequest()
+          sendRequest('SIGNUP')
           window.location = '/task-manager'
+          // await new Promise(resolve => setTimeout(resolve, 1000));
         }
 
       } catch (error) {

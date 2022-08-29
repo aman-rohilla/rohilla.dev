@@ -319,7 +319,7 @@
           </div>
 
           <div id="popover-content" style="display: none;">
-            <button onclick="logout_user()" class="btn btn-danger btn-sm">Logout</button>
+            <button onclick="$('#popover').trigger('click'); logout_user(); sendRequest('LOGOUT');" class="btn btn-danger btn-sm">Logout</button>
           </div>
         </li>
 
@@ -2871,7 +2871,7 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
           localStorage.setItem('username', res.data.username)
           $('#login-modal').modal('hide') //// 
           login_user()
-          sendRequest()
+          sendRequest('LOGIN')
         }
   
       } catch (error) {
@@ -2937,7 +2937,7 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
           localStorage.setItem('username', res.data.username)
           $('#signup-modal').modal('hide') //// 
           login_user()     
-          sendRequest()     
+          sendRequest('SIGNUP')     
         }
       } catch (error) {
         alertMessage(msgDivID, {message: 'Something went wrong', category: 'danger'})
@@ -3004,17 +3004,28 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     receiver.addEventListener ('message', (e) => {
       if (e.data.tabID != tabID) {
         setTimeout(() => {
-          if(e.data.message == 'RELOAD')
-            window.location.reload()
-          else if(e.data.message == 'LOGOUT')
-            window.location = '/task-manager/logout'
+
+          if(e.data.message == 'LOGIN') {
+            login_user()
+          } else if(e.data.message == 'LOGOUT') {
+            logout_user()
+          } else if(e.data.message == 'SIGNUP') {
+            login_user()
+          }
+
+
+          // if(e.data.message == 'RELOAD') {
+          //   window.location.reload()
+          // }
+          // else if(e.data.message == 'LOGOUT')
+          //   window.location = '/task-manager/logout'
         }, e.data.delay)
       }
     });
 
     const sender = new BroadcastChannel('tab-communication')
-    function sendRequest(msg='RELOAD', delay=0) {
-      sender.postMessage({tabID, message: 'RELOAD', delay})
+    function sendRequest(message='RELOAD', delay=0) {
+      sender.postMessage({tabID, message, delay})
     }
 
     function login_user() {
@@ -3027,15 +3038,15 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
       // sendRequest()
     }
 
-    async function logout_user() {
-      $('#popover').trigger('click')
+    async function logout_user() {      
+      // $('.navbar-collapse').collapse('hide');
       await new Promise(resolve => setTimeout(resolve, 400));
       document.getElementById('user').style.setProperty('display', 'none')
       document.getElementById('login-btn').style.setProperty('display', 'flex')
       localStorage.removeItem('token')
       localStorage.removeItem('username')
       // sendRequest('LOGOUT', 100)
-      sendRequest()
+      // sendRequest()
     }
 
     const isTokenExpired = async () => {
@@ -3043,6 +3054,7 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
         const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
         if(res.data.expired==true) {
           await logout_user()
+          sendRequest('LOGOUT')
         }
       } catch (error) {}
     }
