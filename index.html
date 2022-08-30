@@ -371,15 +371,14 @@
       /* border-top: 2px solid rgba(224, 255, 255, 0); */
       border-bottom: 2px solid rgba(224, 255, 255, 0.868);
       /* border-bottom: 2px solid rgba(38,38,38,var(--mdb-bg-opacity)); */
-
       transition: all .4s ease-in-out;
       /* border-radius: 2rem; */
     }
     
     .name:hover {
       /* border-radius: 5rem; */
-      border: 2px solid rgba(224, 255, 255, 0.868);
       transform: scale(1.03);
+      border: 2px solid rgba(224, 255, 255, 0.868);
     }
     #login-form-btn {
       transition: all .2s ease-in;
@@ -3281,6 +3280,10 @@ $('body').popover({
       } catch (error) {}
     }
     $(document).ready(isTokenExpired)
+    $(document).ready(() => {
+      var isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent));
+      if(isMobile) $('.desc-text').css('font-size', '15px')
+    })
 
 
   </script>
