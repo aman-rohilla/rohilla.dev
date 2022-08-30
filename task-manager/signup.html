@@ -15,6 +15,7 @@
   integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css" rel="stylesheet" /> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
   <!-- <link rel="stylesheet" href="/cdn/bootstrap-icons.css"> -->
   <link rel="stylesheet" href="/cdn/bootstrap.min.css" /> 
@@ -162,12 +163,12 @@
     /* box-shadow: 0px 15px 25px rgb(43, 228, 228); */
     box-shadow: 0px 15px 25px rgb(102, 155, 166);
     ">
-      <form id="signup-form" class="pt-2 pb-4 align-items-center justify-content-center">
+      <form id="signup-form" class="pt-2 pb-4 align-items-center justify-content-center" onsubmit="event.preventDefault(); signupHandler(this);">
 
         
         <h3 class="text-center mb-4 pb-4 mx-3" style="color: lightcyan; border-bottom: 2px solid white;">Create New Account</h3>
         
-        <div id="alerts"></div>
+        <div class="alerts"></div>
 
         <div class="form-floating my-3">
           <input type="text" class="form-control" id="name" name="name" placeholder="Name">
@@ -185,8 +186,8 @@
         <div class="justify-content-center mt-4">
 
           <button id="signup-form-btn" type="submit" class="btn btn-primary btn-sm btn-block d-flex justify-content-start align-items-center" style="height: 40px; background-color: darkcyan;" type="submit">
-            <div class="clearfix" style="width: 33%;">
-              <span class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+            <div class="clearfix spinner-div" style="width: 33%;">
+              <!-- <span class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span> -->
             </div>
             <div class="px-0" style="width: 34%; font-size: 14px;">Register</div>
           </button>  
@@ -198,6 +199,9 @@
   </div>
   </div>
 
+  <div id="spinner-btn-content" class="d-none">
+    <span class="float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+  </div>
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/5396b23a54.js" crossorigin="anonymous"></script>
@@ -218,6 +222,7 @@
   <script src="/cdn/mdb.min.js"></script>
   <script src="/cdn/bootstrap.min.js"></script>
       
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
   <script>
     const baseURL = 'https://rohilla-co-in.herokuapp.com'
@@ -292,115 +297,170 @@
 
 
 <script>
-  const alertDiv = document.getElementById('alerts')
+const alertDiv = document.querySelector('.alerts')
 
-  function alertMessage(messages, element_id='', margin_bottom='2', margin_top='0', padding='7px', max_width='') {
-  
-  
-  if(padding=='') padding = '7px'
+async function alertMessage(messages, element_id='', margin_bottom='2', margin_top='0', padding='5px', max_width='') {
+
+  if(padding=='') padding = '5px'
   if(margin_bottom=='') margin_bottom = '2'
 
   const max_width_str = max_width ? `max-width: ${max_width};` : ''
-
   const arr = Array.isArray(messages) ? messages : [messages]
+
+  if(alertDiv.childElementCount) {
+
+    let count=0
+    $(alertDiv).find('.message').each((index, div) => {
+      const message = div.innerText
+      const category = div.parentElement.parentElement.getAttribute('category')
+
+      if(arr.find(currMsg => currMsg.message == message && currMsg.category == category)) {
+        count ++
+      }       
+    });
+
+    if(count==arr.length && arr.length==alertDiv.childElementCount) {
+      await $(alertDiv).children().each((index, div) => $(div).effect('shake', {distance: 7})).promise()
+      return
+    } else {
+      await clearAlerts(alertDiv)
+    }
+  }
+
   let alert = ''
 
   arr.forEach((message) => {
     alert += 
-  `<div class="container px-3 mb-${margin_top} mb-${margin_bottom} alert alert-${message.category} alert-dismissible fade show" role="alert" style="padding-top: ${padding}; padding-bottom: ${padding}; ${max_width_str}">
+    `<div class="container px-3 mb-${margin_top} mb-${margin_bottom} alert alert-${message.category} alert-dismissible fade show" role="alert" style="padding-top: ${padding}; padding-bottom: ${padding}; ${max_width_str}" category="${message.category}">
 
-  <div class="d-flex justify-content-between align-items-center"> 
-  <div class="message">${message.message}</div>
-  <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="position: relative; padding: 7px;">
-    <span aria-hidden="true">&times;</span>   
-  </button>
-  </div>
-  </div>`      
+    <div class="d-flex justify-content-between align-items-center"> 
+    <div class="message">${message.message}</div>
+    <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="position: relative; padding: 7px;" onclick="event.stopPropagation(); hideAlert(this.parentElement.parentElement)">
+      <span aria-hidden="true">&times;</span>   
+    </button>
+    </div>
+    </div>`      
   })
 
-  alertDiv.innerHTML = alert
+  var el = $(alert).hide();
+  el.css('opacity', '0')
+  $(alertDiv).append(el);
+  // el.show(2000);
+
+  $(el).show({duration: 300}, 'linear')
+  $(el).animate({opacity: 1}, {duration: 400});
 }
 
+async function hideAlert(target) {
+  $(target.parentElement).css('height', target.parentElement.scrollHeight)
+  const newHeight = target.parentElement.scrollHeight - target.scrollHeight
 
-function clearAlerts() {
+  // await $(target).hide('slide', {direction: 'down'}, 500).promise();    
+  await $(target).hide('slide', {direction: 'right'}, 500).promise();
+  await $(target.parentElement).animate({height: newHeight}, {duration: 300}).promise()
+
+  $(target.parentElement).css('height', 'auto')
+  $(target).alert('close')
+}
+
+async function clearAlerts(alertDiv) {
+  if(!alertDiv || !alertDiv.childElementCount) return
+  await $(alertDiv).children().each((index, div) => $(div).animate({opacity: 0}, {duration: 300})).promise()
+  await $(alertDiv).animate({height: 0}, {duration: 400}).promise()
   alertDiv.innerHTML = ''
+  $(alertDiv).css('height', 'auto')
 }
+
+async function toggleDivContent(div, content, seconds=400, fade_last_content=false) {
+  if(fade_last_content || div.html().includes('<'))
+    await $(div).fadeOut(seconds, function() {
+      $(this).html(content).fadeIn(seconds, ()=>{})
+    }).promise();
+  else 
+    await $(div).html(content).fadeIn(seconds, ()=>{}).promise()
+}
+
+
+const spinnerBtnContent = $('#spinner-btn-content').html()
+function startBtnSpinner(btn, duration=100) {
+  btn.prop('disabled', true);
+  toggleDivContent($(btn).find('.spinner-div'), spinnerBtnContent, duration)
+}
+
+async function stopBtnSpinner(btn, duration=300) {
+  await toggleDivContent($(btn).find('.spinner-div'), '', duration)    
+  btn.prop('disabled', false);
+}
+
+
 function isEmailValid(email) {
   const matches = email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
   if(matches) return true
   return false
 }
 
-function startSpinner(container_id) {
-    const div = $(container_id)
-    div.prop("disabled", true);
-    div.find('.spinner').removeClass('d-none')
-  }
-  
-  function stopSpinner(container_id) {
-    const div = $(container_id)
-    div.find('.spinner').addClass('d-none')
-    div.prop("disabled", false);
-  }
-
 </script>
 
 
 <script>
-  const signupForm = document.getElementById('signup-form')
-    signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const spinnerID = '#signup-form-btn'
-
-      const nameForm      = document.getElementById('name')
-      const emailForm     = document.getElementById('email')
-      const passwordForm  = document.getElementById('password')
-
-      const name     = nameForm.value.trim()
-      const email    = emailForm.value.trim()
-      const password = passwordForm.value.trim()
 
 
+async function signupHandler(target) {
+  const spinnerDiv = $(target).find('button[type=submit]')
+  startBtnSpinner(spinnerDiv)
 
-      if(!email || !password || !name) {
-        return alertMessage({message: 'Some fields are empty', category: 'warning'})
-      }
+  const nameForm      = document.getElementById('name')
+  const emailForm     = document.getElementById('email')
+  const passwordForm  = document.getElementById('password')
 
-      let messages = []
-      if(! isEmailValid(email))
-        messages.push({message: 'Email is invalid', category: 'warning'})  
+  const name     = nameForm.value.trim()
+  const email    = emailForm.value.trim()
+  const password = passwordForm.value.trim()
+
+  if(!email || !password || !name) {
+    stopBtnSpinner(spinnerDiv)  
+    return await alertMessage({message: 'Some fields are empty', category: 'warning'})
+  }
+
+  let messages = []
+  if(! isEmailValid(email))
+    messages.push({message: 'Email is invalid', category: 'warning'})  
+
+  if(password.length<8) 
+    messages.push({message: `Password is less than 8 characters`, category: 'warning'})
+
+  if(messages.length) {
+    stopBtnSpinner(spinnerDiv)  
+    return await alertMessage(messages)
+  }
+
+  try {
+    clearAlerts(alertDiv)
+    const res = await axios.post(`${baseURL}/api/signup`, { name, email, password})
+    await stopBtnSpinner(spinnerDiv)  
+    let message = res.data.message
     
-      if(password.length<8) 
-        messages.push({message: `Password is less than 8 characters`, category: 'warning'})
+    if(res.data.status=='success') message += '... Redirecting'
 
-      if(messages.length)
-        return alertMessage(messages)
+    if(message) {
+      await alertMessage({message, category: res.data.category})
+    }
+    if(res.data.status=='success') {
+      target.reset()
+      $(target).find('input').blur()
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('username', res.data.username)
+      sendRequest('SIGNUP')
+      window.location = '/task-manager'
+      // await new Promise(resolve => setTimeout(resolve, 1000));
+    }
 
-      try {
-        startSpinner(spinnerID)
-        const res = await axios.post(`${baseURL}/api/signup`, { name, email, password})
-        stopSpinner(spinnerID)  
-        let message = res.data.message
-       
-        if(res.data.status=='success') message += '... Redirecting'
-
-        if(message)
-          alertMessage({message, category: res.data.category})
-
-        if(res.data.status=='success') {
-          e.target.reset()
-          localStorage.setItem('token', res.data.token)
-          localStorage.setItem('username', res.data.username)
-          sendRequest('SIGNUP')
-          window.location = '/task-manager'
-          // await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-
-      } catch (error) {
-        alertMessage({message: 'Something went wrong', category: 'danger'})
-        stopSpinner(spinnerID)  
-      }
-    })
+  } catch (error) {
+    await stopBtnSpinner(spinnerDiv)  
+    await alertMessage({message: 'Something went wrong', category: 'danger'})
+  }
+}
 </script>
 
 

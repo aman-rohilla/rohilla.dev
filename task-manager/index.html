@@ -9,7 +9,7 @@
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <!-- <link rel="stylesheet" href="/cdn/bootstrap-icons.css"> -->
     <link rel="stylesheet" href="/cdn/bootstrap.min.css" /> 
     <link rel="stylesheet" href="/cdn/mdb.min.css" />
@@ -91,21 +91,23 @@
 
       </ul>
 
-      <ul id="user-div" class="navbar-nav ml-auto d-none">
-        <li class="nav-item my-2 mr-2">
-          <span style="color: lightblue;">Welcome, </span>
-          <span id="username" style="color: lightseagreen; font-weight: 600;">username</span>
-        </li>
-
-        <li class="nav-item collapse-item">
-          <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
-        </li>
-        
+      <ul id="user-div" class="navbar-nav ml-auto">        
       </ul>
 
 
     </div>
   </nav>
+
+<div id="user-div-content" style="display: none;">
+  <li class="nav-item my-2 mr-2">
+    <span style="color: lightblue;">Welcome, </span>
+    <span class="username" style="color: lightseagreen; font-weight: 600;">username</span>
+  </li>
+
+  <li class="nav-item collapse-item">
+    <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
+  </li>
+</div>
 
 <div id="popover-content" style="display: none;">
   
@@ -180,8 +182,8 @@
               <div class="justify-content-center pt-2">
 
                 <button type="submit" class="btn btn-danger btn-block text-white d-flex login-form-btn justify-content-start align-items-center" style="height: 40px;">
-                  <div class="clearfix" style="width: 33%;">
-                    <span class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  <div class="clearfix spinner-div" style="width: 33%;">
+
                   </div>
                   <div class="px-0" style="width: 34%; font-size: 14px;">Sign In</div>
                 </button>  
@@ -219,9 +221,12 @@
       </div>
       
       <div class="d-flex justify-content-center">
-        <div class="d-none spinner spinner-border spinner-border-sm my-auto mr-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+        <!-- <div class="d-none spinner spinner-border spinner-border-sm my-auto" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div> -->
+        
+        <div class="spinner-div my-auto">
+        </div>
 
-        <div class="btn-group my-2" role="group" aria-label="Basic example">
+        <div class="btn-group my-2 ml-3" role="group" aria-label="Basic example">
           <button class="btn btn-sm px-2 py-2 btn-primary" data-toggle="modal" data-target="#add-task-modal">Add New</button>
           <button class="btn btn-sm px-2 py-2 btn-success check-all" onclick="checkAllHandler(this)">Check All</button>
           <button class="btn btn-sm px-2 py-2 btn-dark uncheck-all" onclick="uncheckAllHandler(this)">Uncheck All</button>
@@ -234,8 +239,10 @@
 
   <div id="small-task-list-title" style="display: none;">
     <div class="text-white d-flex" style="display: inline-block;">
-      <div class="my-0 py-2" style="font-size: 22px;">Task List</div>
-      <div class="d-none spinner spinner-border spinner-border-sm my-auto ml-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+      <div class="my-0 py-2 mr-3" style="font-size: 22px;">Task List</div>
+      <!-- <div class="d-none spinner spinner-border spinner-border-sm my-auto" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div> -->
+      <div class="spinner-div my-auto">
+      </div>
     </div>
       
     <div class="d-flex">
@@ -262,14 +269,16 @@
         
   
           <li class="list-group-item task-list-title" style="background-color: darkcyan; padding-top: 12px; padding-bottom: 12px;">
-            
+                    
             <div class="text-white d-flex" style="display: inline-block;">
-              <div class="my-0 py-2" style="font-size: 22px;">Task List</div>
-              <div class="d-none spinner spinner-border spinner-border-sm my-auto ml-3" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+              <div class="my-0 py-2 mr-3" style="font-size: 22px;">Task List</div>
+              <!-- <div class="d-none spinner spinner-border spinner-border-sm my-auto" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div> -->
+              <div class="spinner-div my-auto">
+              </div>
             </div>
               
             <div class="d-flex">
-        
+
               <div class="btn-group my-2" role="group" aria-label="Basic example">
                 <button class="btn btn-sm px-2 py-2 btn-primary" data-toggle="modal" data-target="#add-task-modal">Add New</button>
                 <button class="btn btn-sm px-2 py-2 btn-success check-all" onclick="checkAllHandler(this)">Check All</button>
@@ -289,6 +298,10 @@
     </div>
   </div>
   
+  <div id="task-title-spinner-content" style="display: none;">
+    <div class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: white;"></div>
+  </div>
+
   <div class="modal fade px-2" id="edit-task-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
       <div class="modal-content" style="background-color: rgb(79, 131, 141); color: white;">
@@ -322,8 +335,8 @@
               <div class="d-flex justify-content-center">
 
                 <button id="edit-task-form-btn" type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px; background-color:rgb(19, 163, 163);">
-                  <div class="clearfix" style="width: 30%;">
-                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  <div class="clearfix spinner-div" style="width: 30%;">
+
                   </div>
                   <div class="px-0" style="width: 40%; font-size: 14px;">Update</div>
                 </button>  
@@ -371,8 +384,7 @@
               <div class="d-flex justify-content-center mt-4 mb-0">
 
                 <button type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px;">
-                  <div class="clearfix" style="width: 30%;">
-                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  <div class="clearfix spinner-div" style="width: 30%;">
                   </div>
                   <div class="px-0" style="width: 40%; font-size: 14px;">Submit</div>
                 </button>  
@@ -424,8 +436,8 @@
               <div class="d-flex justify-content-center">
 
                 <button id="add-task-form-btn" type="submit" class="btn btn-success text-white d-flex justify-content-start align-items-center py-2" style="width: 200px; background-color: darkcyan;">
-                  <div class="clearfix" style="width: 30%;">
-                    <span class="d-none float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+                  <div class="clearfix spinner-div" style="width: 30%;">
+                    
                   </div>
                   <div class="px-0" style="width: 40%; font-size: 14px;">Submit</div>
                 </button>  
@@ -440,6 +452,9 @@
     </div>
   </div>
   
+  <div id="spinner-btn-content" class="d-none">
+    <span class="float-end spinner spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="height: 20px; width: 20px;"></span>
+  </div>
 
 
   <style>
@@ -516,6 +531,11 @@
 </div>
 
 
+<div id="task-btns-spinner-content" style="display: none;">
+  <div class="float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: var(--taskSpinnerColor); margin-right: 12px;"></div>
+</div>
+
+
 
 <div id="center-item-outer">
   <div id="center-item">
@@ -568,6 +588,8 @@
 <script src="/cdn/mdb.min.js"></script>
 <script src="/cdn/bootstrap.min.js"></script>
 
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 
 <!-- Center script -->
@@ -643,16 +665,16 @@
   receiver.addEventListener ('message', (e) => {
     // console.log(e.data.message);
     if (e.data.tabID != tabID) {
-      setTimeout(() => {
+      setTimeout(async () => {
 
         if(e.data.message == 'LOGIN') {
-          login_user()
+          await login_user()
           startUp()
         } else if(e.data.message == 'LOGOUT') {
-          logout_user()
+          await logout_user()
         } else if(e.data.message == 'SIGNUP') {
           login_user()
-          showAddATask()
+          await showAddATask()
         }
 
         // if(e.data.message == 'RELOAD')
@@ -670,27 +692,42 @@
 
   const userDiv = $('#user-div')
   const usernameDiv = $('#username')
-  function toggle_user(username='') {
+  async function toggle_user(username='') {
     if(!username) username = localStorage.getItem('username')
-    if(!username)
-      userDiv.addClass('d-none')
+    if(!username) {
+      // userDiv.addClass('d-none')
+      toggleDivContent($('#user-div'), '', 1000)
+    }
     else {
-      usernameDiv.html(username)
-      userDiv.removeClass('d-none')
+      const el = $($('#user-div-content')).hide()
+      el.find('.username').html(username)
+      // await toggleDivContent($('#user-div'), el.html(), 2000)
+
+      // var el = $(alert).hide();
+      userDiv.css('opacity', '0')
+      $(userDiv).html(el.html());
+      // el.show(2000);
+
+
+      await $(userDiv).show({duration: 300}, 'linear').promise()
+      $(userDiv).animate({opacity: 1}, {duration: 1000});
+
+
+      // usernameDiv.html(username)
+      // userDiv.removeClass('d-none')
     }
   }
 
-  function login_user(username) {
-    toggle_user(username)
+  async function login_user(username) {
+    await toggle_user(username)
   }
 
   async function logout_user() {
     // sendRequest('LOGOUT', 100)
     localStorage.removeItem('token')
     localStorage.removeItem('username')
-    await new Promise(resolve => setTimeout(resolve, 300))
-    toggle_user()
-    toggleCenterContent(loginFormDiv.innerHTML)
+    await toggle_user()
+    await toggleCenterContent(loginFormDiv.innerHTML)
     // sendRequest()
   }
 
@@ -734,20 +771,40 @@ const observer = new ResizeObserver(entries => {
 })
 observer.observe(centerItem);
 
-  function toggleCenterContent(content) {
+
+  async function toggleCenterContent(content, seconds=500) {
     // if(centerItem.innerHTML.includes('<'))
     //   $(centerItem).fadeOut('slow', function() {});
     
-    centerItem.innerHTML = content
-    // $(centerItem).fadeIn(1000, function() {
-    //   $(this).html(content).fadeIn(2000, ()=>{})
-    // });
-    // await new Promise(resolve => setTimeout(resolve, 500))
-
-    // $(centerItem).animate({'opacity': 0}, 200, function(){
-    //     $(this).html(content).animate({'opacity': 1}, 400);    
+    // $(centerItem).fadeOut(4000, function() {
+    //   $(this).html(content).fadeIn(4000, ()=>{})
     // });
 
+    if(centerItem.innerHTML.includes('<')) {
+      await $(centerItem).fadeOut(seconds, function() {
+        $(this).html(content).fadeIn(seconds, ()=>{})
+      }).promise();
+    } else { 
+      await $(centerItem).html(content).fadeIn(seconds, ()=>{}).promise()
+    }
+
+    // await $(centerItem).hide('slide', {direction: 'right'}, 1000).promise();
+    // $(centerItem).animate({
+    //     'opacity' : 0
+    // }, 400, function() {
+    //   $(this).html(content).animate({'opacity': 1}, 400);
+    // });
+
+    // await new Promise(resolve => setTimeout(resolve, 5000))
+  }
+
+  async function toggleDivContent(div, content, seconds=400, fade_last_content=false) {
+    if(fade_last_content || div.html().includes('<'))
+      await $(div).fadeOut(seconds, function() {
+        $(this).html(content).fadeIn(seconds, ()=>{})
+      }).promise();
+    else 
+      await $(div).html(content).fadeIn(seconds, ()=>{}).promise()
   }
 
 </script>
@@ -781,22 +838,40 @@ observer.observe(centerItem);
     const name = editTaskFormInput.value
 
     try {
-      startSpinner(null, editTaskModalSpinnerDiv)
+      
+      // editTaskModalSpinnerDiv.prop("disabled", true);
+      // editTaskModalSpinnerDiv.find('.spinner').removeClass('d-none')
+      // await editTaskModalSpinnerDiv.find('.spinner').fadeIn(1000).promise()
+      
+      
+      
+      
+      
+      clearAlerts(centerItem.querySelector('.alerts'))
+      startBtnSpinner(editTaskModalSpinnerDiv)
       const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      stopSpinner(null, editTaskModalSpinnerDiv)    
+      await stopBtnSpinner(editTaskModalSpinnerDiv)    
+
+      // await editTaskModalSpinnerDiv.find('.spinner').fadeOut(1000).promise()
+      // editTaskModalSpinnerDiv.find('.spinner').addClass('d-none')
+      // editTaskModalSpinnerDiv.prop("disabled", false);
+
+
+
+
 
       if(res.data.status!='success') {
-        alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+        await alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
       } else {
         const index = tasks.findIndex((el) => el._id == taskID)
         tasks[index].name = name
         editTaskModalCloseBtn.trigger('click')
+        // await new Promise(p => setTimeout(p, 5000))
         updateTaskName(taskID, name)
       }
     } catch (error) {
-      stopSpinner(null, editTaskModalSpinnerDiv)    
-      alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+      await stopBtnSpinner(editTaskModalSpinnerDiv)
+      await alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
     }
 
   })
@@ -811,21 +886,21 @@ observer.observe(centerItem);
     const name = addTaskFormInput.value
 
     try {
-      startSpinner(null, addTaskModalSpinnerDiv)
+      clearAlerts(centerItem.querySelector('.alerts'))
+      startBtnSpinner(addTaskModalSpinnerDiv)
       const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      stopSpinner(null, addTaskModalSpinnerDiv)    
+      await stopBtnSpinner(addTaskModalSpinnerDiv)    
 
       const task = res.data.task
       if(res.data.status!='success') {
-        alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+        await alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
       } else {
         addTaskModalCloseBtn.trigger('click')
         addTask({_id: task._id, name: task.name, completed: false})
       }
     } catch (error) {
-      stopSpinner(null, addTaskModalSpinnerDiv)    
-      alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
+      await stopBtnSpinner(addTaskModalSpinnerDiv)    
+      await alertMessage({message: 'Something went wrong', category: 'danger'}, alertDiv, '3')
     }
 
   })
@@ -834,19 +909,22 @@ observer.observe(centerItem);
 
   async function checkAllHandler(target) {
 
-    if(!tasks.find(task => task.completed==false))
+    if(tasks.every(task => task.completed==true))
       return
 
     const titleBtns = Array.from($(target.parentElement).find('button'))
     const spinner = $(centerItem).find('.task-list-title').find('.spinner')
     titleBtns.forEach(btn => btn.disabled = true)
-    spinner.removeClass('d-none')
+    // spinner.removeClass('d-none')
+
+    const spinnerDiv = $(centerItem).find('.task-list-title').find('.spinner-div')
 
     try {  
       errorToast.toast('hide')
+      toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
       const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: true}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))        
-      spinner.addClass('d-none')
+      toggleDivContent(spinnerDiv, '', 300)
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
       
       if(res.data.status!='success') {
@@ -859,7 +937,8 @@ observer.observe(centerItem);
         taskItems.forEach(taskItem => updateTaskStatus(taskItem, true))
       }
     } catch (error) {
-      spinner.addClass('d-none')
+      toggleDivContent(spinnerDiv, '', 300)
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
       errorToast.toast('show')
     }
@@ -867,19 +946,22 @@ observer.observe(centerItem);
 
   async function uncheckAllHandler(target) {
 
-    if(tasks.find(task => task.completed==false))
+    if(tasks.every(task => task.completed==false))
       return
 
     const titleBtns = Array.from($(target.parentElement).find('button'))
     const spinner = $(centerItem).find('.task-list-title').find('.spinner')
     titleBtns.forEach(btn => btn.disabled = true)
-    spinner.removeClass('d-none')
+    // spinner.removeClass('d-none')
 
+    const spinnerDiv = $(centerItem).find('.task-list-title').find('.spinner-div')
     try {
       errorToast.toast('hide')
+      toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
       const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: false}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))        
-      spinner.addClass('d-none')
+
+      toggleDivContent(spinnerDiv, '', 300)
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
 
       if(res.data.status!='success') {
@@ -892,7 +974,8 @@ observer.observe(centerItem);
         taskItems.forEach(taskItem => updateTaskStatus(taskItem, false))
       }
     } catch (error) {
-      spinner.addClass('d-none')
+      toggleDivContent(spinnerDiv, '', 300)
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
       errorToast.toast('show')
     }
@@ -902,26 +985,29 @@ observer.observe(centerItem);
     const titleBtns = Array.from($(target.parentElement).find('button'))
     const spinner = $(centerItem).find('.task-list-title').find('.spinner')
     titleBtns.forEach(btn => btn.disabled = true)
-    spinner.removeClass('d-none')
+    // spinner.removeClass('d-none')
 
+    const spinnerDiv = $(centerItem).find('.task-list-title').find('.spinner-div')
     try {
       errorToast.toast('hide')
+      toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
       const res = await axios.delete(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      spinner.addClass('d-none')
+      await toggleDivContent(spinnerDiv, '', 300)
+      
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
       if(res.data.status!='success') {
         errorToast.toast('show')
       } else {
         tasks = []
-        showAddATask()
+        await showAddATask()
       }
     } catch (error) {
-      spinner.addClass('d-none')
+      await toggleDivContent(spinnerDiv, '', 300)
+      // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
       errorToast.toast('show')
     }
-
   }
 
   async function editBtnHandler(target) {
@@ -940,16 +1026,33 @@ observer.observe(centerItem);
     const taskBtns = Array.from($(target.parentElement).find('button'))
     const spinner = $(target.parentElement.parentElement).find('.spinner')
     taskBtns.forEach(btn => btn.disabled = true)
-    spinner.removeClass('d-none')
+    // spinner.removeClass('d-none')
 
     const index = tasks.findIndex(task => task._id == taskID)
     const completed = ! tasks[index].completed
     
+
+    const spinnerDiv = $(target.parentElement.parentElement).find('.spinner-div')
     try {
       errorToast.toast('hide')
+
+      toggleDivContent(spinnerDiv, $('#task-btns-spinner-content').html(), 100)
+      // spinner.removeClass('d-none')
+
+
       const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {completed}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))        
-      spinner.addClass('d-none')
+      
+      toggleDivContent(spinnerDiv, '', 400)
+
+      // spinner.fadeOut('fast')
+      // spinner.addClass('d-none')
+
+      // await editTaskModalSpinnerDiv.find('.spinner').fadeOut(1000).promise()
+      // editTaskModalSpinnerDiv.find('.spinner').addClass('d-none')
+      
+      
+      
+      // spinner.addClass('d-none')
       taskBtns.forEach(btn => btn.disabled = false)
       
       if(res.data.status!='success') {
@@ -959,7 +1062,8 @@ observer.observe(centerItem);
         updateTaskStatus(taskItem, completed)
       }
     } catch (error) {
-      spinner.addClass('d-none')
+      // spinner.addClass('d-none')
+      toggleDivContent(spinnerDiv, '', 400)
       taskBtns.forEach(btn => btn.disabled = false)
       errorToast.toast('show')
     } 
@@ -972,21 +1076,24 @@ observer.observe(centerItem);
     const taskBtns = Array.from($(target.parentElement).find('button'))
     const spinner = $(target.parentElement.parentElement).find('.spinner')
     taskBtns.forEach(btn => btn.disabled = true)
-    spinner.removeClass('d-none')
+    // spinner.removeClass('d-none')
     
+    const spinnerDiv = $(target.parentElement.parentElement).find('.spinner-div')
     try {
       errorToast.toast('hide')
+      toggleDivContent(spinnerDiv, $('#task-btns-spinner-content').html(), 100)
       const res = await axios.delete(`${baseURL}/task-manager/api/${taskID}`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000))        
-      spinner.addClass('d-none')
+      // spinner.addClass('d-none')
+      await toggleDivContent(spinnerDiv, '', 200)
       taskBtns.forEach(btn => btn.disabled = false)        
       if(res.data.status!='success') {
         errorToast.toast('show')
       } else {
-        deleteTask(taskItem)
+        await deleteTask(taskItem)
       }
     } catch (error) {
-      spinner.addClass('d-none')
+      await toggleDivContent(spinnerDiv, '', 200)
+      // spinner.addClass('d-none')
       taskBtns.forEach(btn => btn.disabled = false)
       errorToast.toast('show')
     }
@@ -1001,7 +1108,7 @@ observer.observe(centerItem);
 <!-- functions -->
 <script>
 
-  function alertMessage(messages, element_id='', margin_bottom='2', margin_top='0', padding='5px', max_width='') {
+  async function alertMessage(messages, element_id='', margin_bottom='2', margin_top='0', padding='5px', max_width='') {
 
     let alertDiv = null
     if(element_id=='')
@@ -1013,28 +1120,162 @@ observer.observe(centerItem);
     if(margin_bottom=='') margin_bottom = '2'
 
     const max_width_str = max_width ? `max-width: ${max_width};` : ''
-
     const arr = Array.isArray(messages) ? messages : [messages]
+
+
+
+
+    if(alertDiv.childElementCount) {
+      // await $(alertDiv).fadeOut(1000).promise()
+      // await $(alertDiv).hide('slide', {direction: 'down'}, 600).promise();  
+      // await $(alertDiv).animate({height: 0}, {duration: 300}).promise()
+      // await $(alertDiv).children().each((index, div) => $(div).fadeOut('400')).promise()
+      // setTimeout($(alertDiv).animate({height: 0}, {duration: 300}), 1000)
+
+      // setTimeout(() => $(alertDiv).children().each((index, div) => $(div).alert('close')), 500)
+      // $(alertDiv).css('height', 'auto')
+      // $(alertDiv).show()  
+      
+
+      /* without shaking
+
+      // $(alertDiv).css('height', alertDiv.scrollHeight)
+      await $(alertDiv).children().each((index, div) => $(div).animate({opacity: 0}, {duration: 300})).promise()
+      
+      // await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // await $(target).hide('slide', {direction: 'down'}, 600).promise();    
+      await $(alertDiv).animate({height: 0}, {duration: 400}).promise()
+      // await $(alertDiv).children().each((index, div) => $(div).alert('close')).promise()
+      alertDiv.innerHTML = ''
+      $(alertDiv).css('height', 'auto')
+      // await new Promise(resolve => setTimeout(resolve, 2000))
+
+      */
+
+      let count=0
+      $(alertDiv).find('.message').each((index, div) => {
+        const message = div.innerText
+        const category = div.parentElement.parentElement.getAttribute('category')
+
+        if(arr.find(currMsg => currMsg.message == message && currMsg.category == category)) {
+          count ++
+        }       
+      });
+
+
+      if(count==arr.length && arr.length==alertDiv.childElementCount) {
+        await $(alertDiv).children().each((index, div) => $(div).effect('shake', {distance: 7})).promise()
+        return
+      } else {
+        await clearAlerts(alertDiv)
+      }
+    }
+
+
+
+
+
     let alert = ''
 
     arr.forEach((message) => {
       alert += 
-`<div class="container px-3 mb-${margin_top} mb-${margin_bottom} alert alert-${message.category} alert-dismissible fade show" role="alert" style="padding-top: ${padding}; padding-bottom: ${padding}; ${max_width_str}">
+`<div class="container px-3 mb-${margin_top} mb-${margin_bottom} alert alert-${message.category} alert-dismissible fade show" role="alert" style="padding-top: ${padding}; padding-bottom: ${padding}; ${max_width_str}" category="${message.category}">
 
   <div class="d-flex justify-content-between align-items-center"> 
     <div class="message">${message.message}</div>
-    <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="position: relative; padding: 7px;">
+    <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="position: relative; padding: 7px;" onclick="event.stopPropagation(); hideAlert(this.parentElement.parentElement)">
       <span aria-hidden="true">&times;</span>   
     </button>
   </div>
 </div>`      
     })
 
-    alertDiv.innerHTML = alert
+    var el = $(alert).hide();
+    el.css('opacity', '0')
+    $(alertDiv).append(el);
+    // el.show(2000);
+
+    $(el).show({duration: 300}, 'linear')
+    $(el).animate({opacity: 1}, {duration: 400});
+
+
+    // $(el).show(400, 'linear')
+    // // .css( {'opacity': 0, 'top': '0px' } )
+    // .animate( { 'opacity': '1', 'top' : 0 }, 400 );
+
+
+    // $( function () {    
+    
+    //   $(el).show({duration: 400}, 'linear')
+    //   $(el).animate({opacity: 1, top: 0}, {duration: 400});
+    
+    //   // $(alertDiv).fadeOut({duration: 2000, }, function() {
+    //   //   $(this).html(alert).fadeIn(2000, ()=>{})
+    //   // })
+      
+    // })
+
+    // $(alertDiv).css('opacity', '0')
+    // $(alertDiv).append(alert);
+
+    // $(alertDiv).animate({'opacity': '1'},1000,'easeOutBounce')
+
+    // alertDiv.innerHTML = alert
+    // $(centerItem).animate({height: $(centerItem).get(0).scrollHeight}, 1000 );
+
+    // $(alertDiv).css('z-index', '-100')
+    // console.log(alertDiv.scrollHeight);
+    
+    // $(alertDiv).css('opacity', '0')
+    // alertDiv.innerHTML = alert
+    // console.log(alertDiv.scrollHeight);
+
+    // $(centerItem).animate('{height:"toggle"}');
+// console.log(centerItem.scrollHeight);
+    // $( function () {    
+    
+    //   // $(alertDiv).animate({height: 48}, {duration: 2000, queue: false});
+    //   $(alertDiv).animate({opacity: 1}, {duration: 2000, queue: false});
+    
+    //   // $(alertDiv).fadeOut({duration: 2000, }, function() {
+    //   //   $(this).html(alert).fadeIn(2000, ()=>{})
+    //   // })
+      
+    // })
+    // await $(alertDiv).toggle(2000).promise()
+    // await $(alertDiv).hide('slide', {direction: 'right'}, 1000).promise();
+
   }
 
-  function clearAlerts(element_id) {
-    document.getElementById(element_id).innerHTML = ''
+  async function hideAlert(target) {
+    // $(centerItem.querySelector('.alerts')).css('display', 'none')
+    // await $(target).animate({duration: 400, opacity: '0'}, () => {
+    //   $(target).hide(400)
+    // }).promise()
+
+    $(target.parentElement).css('height', target.parentElement.scrollHeight)
+    const newHeight = target.parentElement.scrollHeight - target.scrollHeight
+
+    // $(target).css('z-index', '-100')
+    // await $(target.parentElement).animate({height: 0}, {duration: 1000}).promise()
+    
+    // await $(target).hide('slide', {direction: 'down'}, 500).promise();    
+    await $(target).hide('slide', {direction: 'right'}, 500).promise();
+    await $(target.parentElement).animate({height: newHeight}, {duration: 300}).promise()
+
+    // await new Promise(resolve => setTimeout(resolve, 200))
+    // $(target.parentElement).hide({duration: 300}, 'linear')
+    $(target.parentElement).css('height', 'auto')
+    $(target).alert('close')
+  }
+
+  async function clearAlerts(alertDiv) {
+    if(!alertDiv || !alertDiv.childElementCount) return
+    await $(alertDiv).children().each((index, div) => $(div).animate({opacity: 0}, {duration: 300})).promise()
+    await $(alertDiv).animate({height: 0}, {duration: 400}).promise()
+    alertDiv.innerHTML = ''
+    $(alertDiv).css('height', 'auto')
   }
 
   function startSpinner(container_id, div=null) {
@@ -1042,32 +1283,39 @@ observer.observe(centerItem);
     div.prop("disabled", true);
     div.find('.spinner').removeClass('d-none')
   }
-  
-  function stopSpinner(container_id, div=null) {
-    if(!div) div = $(container_id)
-    div.find('.spinner').addClass('d-none')
-    div.prop("disabled", false);
+
+
+  const spinnerBtnContent = $('#spinner-btn-content').html()
+  function startBtnSpinner(btn, duration=100) {
+    btn.prop('disabled', true);
+    toggleDivContent($(btn).find('.spinner-div'), spinnerBtnContent, duration)
   }
+  
+  async function stopBtnSpinner(btn, duration=300) {
+    await toggleDivContent($(btn).find('.spinner-div'), '', duration)    
+    btn.prop('disabled', false);
+  }
+
+
 
 
   async function getAllTasks() {
     try {
       // const res = await axios.post('https://rohilla-co-in.herokuapp.com/task-manager/api')
       errorToast.toast('hide')
-      startLoader()
+      await startLoader()
       const res = await axios.get(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise(resolve => setTimeout(resolve, 500))
       if(res.data.status!='success') {
-        toggleCenterContent(failedDiv.innerHTML)
+        await toggleCenterContent(failedDiv.innerHTML)
         errorToast.toast('show')
       } else {
         tasks = res.data.tasks
-        if(!tasks.length) showAddATask()
-        else              showTasks()
+        if(!tasks.length) await showAddATask()
+        else              await showTasks()
       }
     } catch (error) {
-      toggleCenterContent(failedDiv.innerHTML)
+      await toggleCenterContent(failedDiv.innerHTML)
       errorToast.toast('show')
     }
   }
@@ -1092,7 +1340,9 @@ observer.observe(centerItem);
 
         <div class="my-auto py-auto d-flex justify-content-end align-items-center">
 
-          <div class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: var(--taskSpinnerColor); margin-right: 12px;"></div>
+          <!-- <div class="d-none float-end spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height: 20px; width: 20px; color: var(--taskSpinnerColor); margin-right: 12px;"></div> -->
+
+          <div class="spinner-div"></div>
 
           <div taskID="${task._id}" taskName="${task.name}" class="btn-group float-right task-item" role="group" aria-label="Basic example">
             <button class="btn icon btn-edit" data-toggle="modal"
@@ -1124,17 +1374,17 @@ observer.observe(centerItem);
 
 
 
-  function showAddATask() {
-    toggleCenterContent(addTaskDiv.innerHTML)
+  async function showAddATask() {
+    await toggleCenterContent(addTaskDiv.innerHTML)
     centerItem.querySelector('input').focus()
     return
   }
 
 
-  function showTasks() {
+  async function showTasks() {
 
     if(!tasks.length) {
-      showAddATask()
+      await showAddATask()
       return
     }
     let taskList = []
@@ -1143,15 +1393,29 @@ observer.observe(centerItem);
       taskList.unshift(createTask(task, categories[categoryIndex%categories.length]))
       categoryIndex ++
     })
+    
+    // await toggleCenterContent(taskList.join('\n\n'))
+    // centerItem.querySelector('.tasks').innerHTML = taskList.join('\n\n')
+    
 
-    toggleCenterContent(tasklistDiv.innerHTML)
-    centerItem.querySelector('.tasks').innerHTML = taskList.join('\n\n')
-    setTaskListTitle()
+
+    var el = $(tasklistDiv.innerHTML)
+
+    if (window.innerWidth > 600)
+      el.find('.task-list-title').html(largeTaskListTitle.innerHTML)
+    else 
+      el.find('.task-list-title').html(smallTaskListTitle.innerHTML)
+
+    el.find('.tasks').html(taskList.join('\n\n'))
+    await toggleCenterContent(el)
+
+    // setTaskListTitle()
   }
 
   // showTasks()
 
-  function updateTaskName(taskID, name) {
+  async function updateTaskName(taskID, name) {
+    // await toggleDivContent($(centerItem).find(`div[taskID=${taskID}]`).parent().parent().find('.task-name'), name, 5000, true)
     $(centerItem).find(`div[taskID=${taskID}]`).parent().parent().find('.task-name').html(name)
   }
 
@@ -1181,16 +1445,16 @@ observer.observe(centerItem);
   }
 
 
-  function deleteTask(taskItem) {
+  async function deleteTask(taskItem) {
     const taskID = taskItem.getAttribute("taskID");    
     const taskIndex = tasks.findIndex(task => task._id == taskID)
-    $(centerItem).find(`div[taskID=${taskID}]`).parents('.list-item').remove()
     tasks.splice(taskIndex, 1)    
     
     if(!tasks.length) {
-      showAddATask()
+      await showAddATask()
       return
     }
+    $(centerItem).find(`div[taskID=${taskID}]`).parents('.list-item').remove()
     
     const taskList = $(centerItem).find('.list-item')
 
@@ -1227,12 +1491,14 @@ observer.observe(centerItem);
 
   async function loginHandler(target) {
     const spinnerDiv = $(target).find('button[type=submit]')
+    startBtnSpinner(spinnerDiv)
 
     const email    = target.querySelector('.login-email').value.trim()
     const password = target.querySelector('.login-pass').value.trim()
 
     if(!email || !password) {
-      return alertMessage({message: 'Some fields are empty', category: 'warning'})
+      stopBtnSpinner(spinnerDiv)  
+      return await alertMessage({message: 'Some fields are empty', category: 'warning'})
     }
 
     let messages = []
@@ -1242,24 +1508,27 @@ observer.observe(centerItem);
     if(password.length<8) 
       messages.push({message: `Password is less than 8 characters`, category: 'warning'})
 
-    if(messages.length)
-      return alertMessage(messages)
-
+    if(messages.length) {
+      stopBtnSpinner(spinnerDiv)  
+      return await alertMessage(messages)
+    }
       try {
-      startSpinner(null, spinnerDiv)
+      
+      clearAlerts(centerItem.querySelector('.alerts'))
       const res = await axios.post(`${baseURL}/api/login`, { email, password})
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      stopSpinner(null, spinnerDiv)  
+      await stopBtnSpinner(spinnerDiv)  
 
       let message = res.data.message
       
       // console.log(res.data);
-      if(message)
-      alertMessage({message, category: res.data.category})
+      if(message) {
+        await alertMessage({message, category: res.data.category})
+      }
       
       if(res.data.status=='success') {
         target.reset()
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        $(target).find('input').blur()
+        await new Promise(resolve => setTimeout(resolve, 2000))
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('username', res.data.username)
         sendRequest('LOGIN')
@@ -1267,8 +1536,8 @@ observer.observe(centerItem);
       }
 
     } catch (error) {
-      stopSpinner(null, spinnerDiv)  
-      alertMessage({message: 'Something went wrong', category: 'danger'})
+      await stopBtnSpinner(spinnerDiv)  
+      await alertMessage({message: 'Something went wrong', category: 'danger'})
     }
   }
 
@@ -1277,22 +1546,22 @@ observer.observe(centerItem);
     const name = target.querySelector('input').value
     
     try {
-      startSpinner(null,spinnerDiv)
+      clearAlerts(centerItem.querySelector('.alerts'))
+      startBtnSpinner(spinnerDiv)
       const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-      await new Promise(resolve => setTimeout(resolve,1000))
-      stopSpinner(null,spinnerDiv)
+      stopBtnSpinner(spinnerDiv)
 
       const task = res.data.task
       if(res.data.status!='success') {
-        alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
+        await alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
       } else {
         tasks.unshift({_id: task._id, name: task.name, completed: false})
         centerItem.querySelector('.add-a-task-form').reset() ////
-        showTasks()
+        await showTasks()
       }
     } catch (error) {
-      stopSpinner(null,spinnerDiv)
-      alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
+      stopBtnSpinner(spinnerDiv)
+      await alertMessage({message: 'Something went wrong', category: 'danger'}, '', '3')
     }
   }
 
@@ -1316,8 +1585,8 @@ observer.observe(centerItem);
   window.addEventListener('resize', setTaskListTitle);
   
   const loadingDiv = document.getElementById('loading-div')
-  const startLoader = () => {
-    toggleCenterContent(loadingDiv.innerHTML)
+  const startLoader = async () => {
+    await toggleCenterContent(loadingDiv.innerHTML)
   }
   // startLoader()  
 
@@ -1333,9 +1602,9 @@ observer.observe(centerItem);
 
   const startUp = async () => {
     let username = localStorage.getItem('username')
-    toggle_user()
+    await toggle_user()
     if(!username) {
-      toggleCenterContent(loginFormDiv.innerHTML)
+      await toggleCenterContent(loginFormDiv.innerHTML)
     } else {
       await getAllTasks()
       setTaskListTitle()
@@ -1365,7 +1634,10 @@ observer.observe(centerItem);
 
 
 
+<!-- 
 
+
+-->
 
 
 </body>
