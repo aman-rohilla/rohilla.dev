@@ -99,13 +99,13 @@
   </nav>
 
 <div id="user-div-content" style="display: none;">
-  <li class="nav-item my-2 mr-2">
+  <li class="nav-item mr-3 py-2">
     <span style="color: lightblue;">Welcome, </span>
     <span class="username" style="color: lightseagreen; font-weight: 600;">username</span>
   </li>
 
-  <li class="nav-item collapse-item">
-    <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-1">Logout</button>
+  <li class="nav-item collapse-item d-flex align-items-center">
+    <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-auto">Logout</button>
   </li>
 </div>
 
@@ -696,7 +696,12 @@
     if(!username) username = localStorage.getItem('username')
     if(!username) {
       // userDiv.addClass('d-none')
-      toggleDivContent($('#user-div'), '', 1000)
+  
+      const fun = async () => {
+        await toggleDivContent($('#user-div'), '', 1000)
+        $('.navbar-collapse').collapse('hide')
+      }
+      fun()
     }
     else {
       const el = $($('#user-div-content')).hide()
