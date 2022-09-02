@@ -852,7 +852,9 @@
 
 
   <!-- <div class="row px-2 mx-0"> -->
-  <section id="skills" class="skills-section container mb-0 py-4 px-4 d-flex flex-column justify-content-center" style="
+  <section id="skills" class="skills-section container mb-0 py-4 d-flex flex-column justify-content-center" style="
+      padding-left: 0.65rem;
+      padding-right: 0.65rem;
       margin-top: 40px !important;
       max-width: 700px; 
       /* height: 90vh; */
@@ -919,30 +921,30 @@
       }
       .list-sel {
         transition: all .2s ease-in; 
+        padding-left: 18px;
+        padding-right: 18px;
       }
       .list-sel:hover {
         transform: scale(1.03);
         border: 1px solid rgba(52, 52, 52, 0.797);
       }
+
+      .tooltip-inner {
+        background-color: #008ec3;
+        height: 30px !important;       
+        align-items: center;
+        display: flex;
+        margin-top: -5px !important;
+        margin-bottom: -0px !important;
+        padding-left: 7px;
+        padding-right: 7px;
+      }
+
     </style>
 
     <div class="row m-0 p-0 text-center text-center align-items-center justify-content-center my-4">
       <!-- <div class="col col-class-1 d-flex"> -->
       <!-- <div class="row d-flex justify-content-between"> -->
-
-      <style>
-        .tooltip-inner {
-          background-color: #008ec3;
-          height: 30px !important;       
-          align-items: center;
-          display: flex;
-          margin-top: -5px !important;
-          margin-bottom: -5px !important;
-          padding-left: 7px;
-          padding-right: 7px;
-        }
-
-      </style>
 
       <div class="img-div top" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C">
         <img src="/assets/img/icons/c.png"></div>
@@ -969,45 +971,43 @@
       <!-- </div> -->
     </div>
     <ul class="list-group mt-1">
+
       <li class="list-sel list-group-item list-group-item-primary">
-        Data Structures, Algorithms
+        Data Structures, Algorithms, Problem Solving
       </li>
     
       <li class="list-sel list-group-item list-group-item-secondary">
-        Problem Solving
-      </li>
-    
-      <li class="list-sel list-group-item list-group-item-success">
         Django, Flask, Web Scraping, Selenium
       </li>
     
+      <li class="list-sel list-group-item list-group-item-success">
+        Node.js, Express.js, React.js, jQuery
+      </li>
+    
       <li class="list-sel list-group-item list-group-item-warning">
-        Node.js, Express.js, jQuery, JSON
+        SQLAlchemy, Mongoose, JDBC
       </li>
 
       <li class="list-sel list-group-item list-group-item-info">
-        SQLAlchemy, Mongoose, JDBC
-      </li>
-      <li class="list-sel list-group-item list-group-item-light">
         SQLite, MongoDB, PostgreSQL
       </li>
-      <li class="list-sel list-group-item list-group-item-danger">
-        Authentication, REST API, Regex, Git
+      
+      <li class="list-sel list-group-item list-group-item-light">
+        Authentication, REST API, Regex, JSON
       </li>
+      
+      <li class="list-sel list-group-item list-group-item-danger">
+        Flutter, Bootstrap
+      </li>
+    
       <li class="list-sel list-group-item list-group-item-dark" style="background-color: #f1f1f1;">
-        Flutter, Bootstrap, SASS
+        Multithreading, Multiprocessing
       </li>
     
       <li class="list-sel list-group-item list-group-item-primary">
-        Multithreading, Multiprocessing
+        Git, Linux, Windows, Android, File System
       </li>
-      <li class="list-sel list-group-item list-group-item-secondary">
-        Arduino, Raspberry Pi
-      </li>
-    
-      <li class="list-sel list-group-item list-group-item-success">
-        Linux, Windows, Android, File System
-      </li>
+        
     </ul>
     </div>
   </div>
