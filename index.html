@@ -917,8 +917,8 @@
         /* padding-right: 2px; */
         margin-top: 10px;
         margin-bottom: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 8px;
+        margin-right: 8px;
         width: 60px;
         padding: 0;
       }
@@ -949,7 +949,7 @@
       <!-- <div class="col col-class-1 d-flex"> -->
       <!-- <div class="row d-flex justify-content-between"> -->
 
-      <div class="img-div top" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C">
+      <div class="img-div top" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C" style="margin-left: 0 !important;">
         <img src="/assets/img/icons/c.png"></div>
       <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C++">
         <img src="/assets/img/icons/cpp.png"></div>
@@ -968,7 +968,7 @@
         <img src="/assets/img/icons/css.png"></div>
       <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Java">
         <img src="/assets/img/icons/java.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dart" tip-atrs="bottom">
+      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dart" tip-atrs="bottom" style="margin-right: 0 !important;">
         <img src="/assets/img/icons/dart.png"></div>
       <!-- </div> -->
       <!-- </div> -->
@@ -1297,7 +1297,7 @@
               <!-- <b class="short-desc"><em>Full-stack website to manage tasks through Front-end and API</em></b> <br> -->
               <b class="short-desc"><em>Full-stack Task Manager with API</em></b> <br>
               <div class="desc-text" style=" text-align: left;">
-              HTML, CSS, Bootstrap, Nunjucks Templates, JavaScript, Node.js, Express.js, MongoDB, JWT, REST API</div>
+              HTML, CSS, Bootstrap, Nunjucks Templates, JavaScript, Node.js, Express.js, MongoDB, PostgreSQL, React.js, JWT, REST API</div>
 
             </div>
           </div>
@@ -2748,14 +2748,14 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"></script> -->
       
-  <script src="/cdn/axios.min.js"></script>
-  <script src="/cdn/fontawesome.js"></script>
-  <script src="/cdn/jquery-3.3.1.js"></script>
-  <script src="/cdn/popper.min.js"></script>
-  <script src="/cdn/mdb.min.js"></script>
-  <script src="/cdn/bootstrap.min.js"></script>
+      <script src="/cdn/axios.min.js"></script>
+      <script src="/cdn/fontawesome.js"></script>
+      <script src="/cdn/jquery-3.3.1.js"></script>
+      <script src="/cdn/popper.min.js"></script>
+      <script src="/cdn/mdb.min.js"></script>
+      <script src="/cdn/bootstrap.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 
 
@@ -2789,23 +2789,36 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     $('.collapse-item').on('click',function() {
       $('.navbar-collapse').collapse('hide');
     });
- 
-    $('.popover-div').popover({
-      html: true,
-      trigger: 'click',
-      placement: 'bottom',
-      content: function () { return $('#popover-content').html(); }
-    }).on('shown.bs.popover', (event)=>{
-      $('body').on('click', function (e) {
-        $('[data-toggle="popover"]').each(function () {
-          if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-            $(this).trigger('click');
-          }
-        });
-      });
-    }).on('hidden.bs.popover', (event) => {
-      $('body').unbind('click')
-    });
+
+
+    // $('body').on('shown.bs.popover', (event)=>{
+    //   $('body').on('click', function (e) {
+    //     $('[data-toggle="popover"]').each(function () {
+    //       if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+    //         $(this).trigger('click');
+    //       }
+    //     });
+    //   });
+    // }).on('hidden.bs.popover', (event) => {
+    //   $('body').unbind('click')
+    // });
+
+    // $('.popover-div').popover({
+    //   html: true,
+    //   trigger: 'click',
+    //   placement: 'bottom',
+    //   content: function () { return $('#popover-content').html(); }
+    // }).on('shown.bs.popover', (event)=>{
+    //   $('body').on('click', function (e) {
+    //     $('[data-toggle="popover"]').each(function () {
+    //       if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+    //         $(this).trigger('click');
+    //       }
+    //     });
+    //   });
+    // }).on('hidden.bs.popover', (event) => {
+    //   $('body').unbind('click')
+    // });
 
     $('#signup-form-btn').on('click', function () {
       $('#login-modal').on('hidden.bs.modal', function (e) {
@@ -3011,7 +3024,7 @@ async function stopBtnSpinner(btn, duration=300) {
   
       } catch (error) {
         await stopBtnSpinner(spinnerDiv)  
-        await alertMessage(loginAlertsDiv, {message: error.message, category: 'danger'})
+        await alertMessage(loginAlertsDiv, {message: 'Something went wrong', category: 'danger'})
       }
     }
   
@@ -3225,7 +3238,6 @@ async function stopBtnSpinner(btn, duration=300) {
       // console.log(toggleDiv.html());
       // console.log(document.querySelector('.popover'));
 
-      // $('#popover').popover('show') 
     }
 
 $('body').popover({
@@ -3239,9 +3251,17 @@ $('body').popover({
     content: function () {
       return $('#popover-content').html();
     }
-});
+})
 
 
+$('.navbar-collapse').on('hidden.bs.collapse', function() {
+  const div = $('.popover-div')
+  if (div.data('bs.popover')._activeTrigger.click == true){
+    div.trigger('click');
+  }
+
+
+}); 
 
     async function logout_user() {      
       // // $('.navbar-collapse').collapse('hide');
