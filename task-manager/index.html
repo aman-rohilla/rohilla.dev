@@ -105,7 +105,7 @@
   </li>
 
   <li class="nav-item collapse-item d-flex align-items-center">
-    <button onclick="logout_user(); sendRequest('LOGOUT'); axios.get(`${baseURL}/api/logout`);" type="button" class="btn btn-outline-info px-2 my-auto">Logout</button>
+    <button onclick="sendRequest('LOGOUT'); logout_user(); axios.get(`${baseURL}/api/logout`);" type="button" class="btn btn-outline-info px-2 my-auto">Logout</button>
   </li>
 </div>
 
@@ -662,10 +662,9 @@
   const tabID = Math.floor(Math.random() * 1000000);
 
   const receiver = new BroadcastChannel('tab-communication');
-  receiver.addEventListener ('message', (e) => {
+  receiver.addEventListener ('message', async (e) => {
     // console.log(e.data.message);
     if (e.data.tabID != tabID) {
-      setTimeout(async () => {
 
         if(e.data.message == 'LOGIN') {
           await login_user()
@@ -681,7 +680,6 @@
         //   window.location.reload()
         // else if(e.data.message == 'LOGOUT')
         //   window.location = '/task-manager/logout'
-      }, e.data.delay)
     }
   });
 
@@ -1597,8 +1595,8 @@ observer.observe(centerItem);
     try {
       const res = await axios.get(`${baseURL}/api/session/valid`)
       if(res.data.valid!=true) {
-        await logout_user()
         sendRequest('LOGOUT')
+        await logout_user()
       }
     } catch (error) {}
   }

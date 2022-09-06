@@ -254,7 +254,6 @@
     const receiver = new BroadcastChannel('tab-communication');
     receiver.addEventListener ('message', (e) => {
       if (e.data.tabID != tabID) {
-        setTimeout(() => {
 
           if(e.data.message == 'LOGIN' || e.data.message == 'SIGNUP') {
             window.location = '/task-manager'
@@ -264,7 +263,6 @@
           // }
           // else if(e.data.message == 'LOGOUT')
           //   window.location = '/task-manager/logout'
-        }, e.data.delay)
       }
     });
 

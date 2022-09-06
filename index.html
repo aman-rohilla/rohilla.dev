@@ -324,12 +324,12 @@
 
         </li> -->
 
-        <li id="login-btn-div" class="nav-item nav-link mr-auto  flex-column pr-0 collapse-item" style="/*display: flex;*/ display: none;">
-          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto collapse-item" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;">Login</button>
+        <li id="login-btn-div" class="nav-item nav-link mr-auto flex-column pr-0" style="/*display: flex;*/ display: none;">
+          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto collapse-item" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;" onclick="navbarCollapseDiv.collapse('hide')">Login</button>
         </li>
 
         <li id="toggle-div" class="nav-item mr-auto my-auto py-2">
-          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto collapse-item" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;">Login</button>
+          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;" onclick="navbarCollapseDiv.collapse('hide')">Login</button>
 
 
         </li>
@@ -428,7 +428,7 @@
 <!-- Login Modal {start} -->
 
 <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 400px;">
     <div class="modal-content" style="
       /* background-color: rgb(81, 140, 151);  */
       background-color: lightseagreen;
@@ -603,7 +603,7 @@
 
 <!-- Sign Up Modal {start} -->
 <div class="modal fade" id="signup-modal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 400px;">
     <div class="modal-content px-1" style="
       /* background-color: rgb(81, 140, 151); */
       background-color: rgb(152, 195, 195);
@@ -2773,7 +2773,8 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
   <script>
     const baseURL = 'https://rohilla-co-in.herokuapp.com'
     axios.defaults.withCredentials = true
-
+    const navbarCollapseDiv = $('.navbar-collapse')
+    
     const projects = ['tm', 'wifi', 'mdl', 'plc', 'fdl']
 
     projects.forEach((project) => {
@@ -2781,7 +2782,11 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     })  
 
     
-    $('#navbar').ready(() => login_user())
+    let loginBtnDivWidth = 72
+    // loginBtnDivWidth = loginBtnDiv.innerWidth()
+    $('#navbar').ready(() => {
+      login_user()
+    })
     
       
     // const username = document.getElementById('username')
@@ -2799,7 +2804,7 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     }
     
     $('.collapse-item').on('click',function() {
-      $('.navbar-collapse').collapse('hide');
+      navbarCollapseDiv.collapse('hide');
     });
 
 
@@ -3028,9 +3033,9 @@ async function stopBtnSpinner(btn, duration=300) {
           await new Promise(resolve => setTimeout(resolve, 2000));
           localStorage.setItem('username', res.data.username)
           
+          sendRequest('LOGIN')
           $('#login-modal').modal('hide') //// 
           await login_user()
-          sendRequest('LOGIN')
         }
   
       } catch (error) {
@@ -3096,9 +3101,9 @@ async function stopBtnSpinner(btn, duration=300) {
           $(target).find('input').blur()
           await new Promise(resolve => setTimeout(resolve, 2000));
           localStorage.setItem('username', res.data.username)
+          sendRequest('SIGNUP')     
           $('#signup-modal').modal('hide') //// 
           await login_user()     
-          sendRequest('SIGNUP')     
         }
       } catch (error) {
         await stopBtnSpinner(spinnerDiv)  
@@ -3172,7 +3177,6 @@ async function stopBtnSpinner(btn, duration=300) {
     const receiver = new BroadcastChannel('tab-communication');
     receiver.addEventListener ('message', (e) => {
       if (e.data.tabID != tabID) {
-        setTimeout(() => {
 
           if(e.data.message == 'LOGIN') {
             login_user()
@@ -3188,7 +3192,6 @@ async function stopBtnSpinner(btn, duration=300) {
           // }
           // else if(e.data.message == 'LOGOUT')
           //   window.location = '/task-manager/logout'
-        }, e.data.delay)
       }
     });
 
@@ -3273,8 +3276,8 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
 }); 
 
     async function logout_user() {      
-      if(!localStorage.getItem('username'))
-        return
+      // if(!localStorage.getItem('username'))
+      //   return
 
       // // $('.navbar-collapse').collapse('hide');
       // await new Promise(resolve => setTimeout(resolve, 400));
@@ -3295,8 +3298,7 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
       // // await $(loginBtnDiv).animate({opacity: 1}, {duration: 1000}).promise();
 
 
-      const width = loginBtnDiv.innerWidth()
-      await $(toggleDiv).animate({opacity: 0, width: width}, {duration: 600}).promise();
+      await $(toggleDiv).animate({opacity: 0, width: loginBtnDivWidth}, {duration: 600}).promise();
       $(toggleDiv).html(loginBtnDiv.html())
       await $(toggleDiv).animate({opacity: 1}, {duration: 600}).promise();
 
@@ -3308,8 +3310,8 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
         const res = await axios.get(`${baseURL}/api/session/valid`)
 
         if(res.data.valid!=true) {
-          await logout_user()
           sendRequest('LOGOUT')
+          await logout_user()
         }
       } catch (error) {}
     }
