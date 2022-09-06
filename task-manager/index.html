@@ -105,7 +105,7 @@
   </li>
 
   <li class="nav-item collapse-item d-flex align-items-center">
-    <button onclick="logout_user(); sendRequest('LOGOUT')" type="button" class="btn btn-outline-info px-2 my-auto">Logout</button>
+    <button onclick="logout_user(); sendRequest('LOGOUT'); axios.get(`${baseURL}/api/logout`);" type="button" class="btn btn-outline-info px-2 my-auto">Logout</button>
   </li>
 </div>
 
@@ -655,7 +655,7 @@
   let tasks = []
 
   const baseURL = 'https://rohilla-co-in.herokuapp.com'
-
+  axios.defaults.withCredentials = true
 </script>
 
 <script>
@@ -729,7 +729,6 @@
 
   async function logout_user() {
     // sendRequest('LOGOUT', 100)
-    localStorage.removeItem('token')
     localStorage.removeItem('username')
     await toggle_user()
     await toggleCenterContent(loginFormDiv.innerHTML)
@@ -854,7 +853,7 @@ observer.observe(centerItem);
       
       clearAlerts(centerItem.querySelector('.alerts'))
       startBtnSpinner(editTaskModalSpinnerDiv)
-      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {name})
       await stopBtnSpinner(editTaskModalSpinnerDiv)    
 
       // await editTaskModalSpinnerDiv.find('.spinner').fadeOut(1000).promise()
@@ -893,7 +892,7 @@ observer.observe(centerItem);
     try {
       clearAlerts(centerItem.querySelector('.alerts'))
       startBtnSpinner(addTaskModalSpinnerDiv)
-      const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.post(`${baseURL}/task-manager/api`, {name})
       await stopBtnSpinner(addTaskModalSpinnerDiv)    
 
       const task = res.data.task
@@ -927,7 +926,7 @@ observer.observe(centerItem);
     try {  
       errorToast.toast('hide')
       toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
-      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: true}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: true})
       toggleDivContent(spinnerDiv, '', 300)
       // spinner.addClass('d-none')
       titleBtns.forEach(btn => btn.disabled = false)
@@ -963,7 +962,7 @@ observer.observe(centerItem);
     try {
       errorToast.toast('hide')
       toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
-      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: false}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.patch(`${baseURL}/task-manager/api`, {completed: false})
 
       toggleDivContent(spinnerDiv, '', 300)
       // spinner.addClass('d-none')
@@ -996,7 +995,7 @@ observer.observe(centerItem);
     try {
       errorToast.toast('hide')
       toggleDivContent(spinnerDiv, $('#task-title-spinner-content').html(), 100)
-      const res = await axios.delete(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.delete(`${baseURL}/task-manager/api`)
       await toggleDivContent(spinnerDiv, '', 300)
       
       // spinner.addClass('d-none')
@@ -1045,7 +1044,7 @@ observer.observe(centerItem);
       // spinner.removeClass('d-none')
 
 
-      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {completed}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.patch(`${baseURL}/task-manager/api/${taskID}`, {completed})
       
       toggleDivContent(spinnerDiv, '', 400)
 
@@ -1087,7 +1086,7 @@ observer.observe(centerItem);
     try {
       errorToast.toast('hide')
       toggleDivContent(spinnerDiv, $('#task-btns-spinner-content').html(), 100)
-      const res = await axios.delete(`${baseURL}/task-manager/api/${taskID}`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.delete(`${baseURL}/task-manager/api/${taskID}`)
       // spinner.addClass('d-none')
       await toggleDivContent(spinnerDiv, '', 200)
       taskBtns.forEach(btn => btn.disabled = false)        
@@ -1309,7 +1308,7 @@ observer.observe(centerItem);
       // const res = await axios.post('https://rohilla-co-in.herokuapp.com/task-manager/api')
       errorToast.toast('hide')
       await startLoader()
-      const res = await axios.get(`${baseURL}/task-manager/api`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.get(`${baseURL}/task-manager/api`)
       await new Promise(resolve => setTimeout(resolve, 500))
       if(res.data.status!='success') {
         await toggleCenterContent(failedDiv.innerHTML)
@@ -1534,7 +1533,6 @@ observer.observe(centerItem);
         target.reset()
         $(target).find('input').blur()
         await new Promise(resolve => setTimeout(resolve, 2000))
-        localStorage.setItem('token', res.data.token)
         localStorage.setItem('username', res.data.username)
         sendRequest('LOGIN')
         startUp()
@@ -1553,7 +1551,7 @@ observer.observe(centerItem);
     try {
       clearAlerts(centerItem.querySelector('.alerts'))
       startBtnSpinner(spinnerDiv)
-      const res = await axios.post(`${baseURL}/task-manager/api`, {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+      const res = await axios.post(`${baseURL}/task-manager/api`, {name})
       stopBtnSpinner(spinnerDiv)
 
       const task = res.data.task
@@ -1595,15 +1593,16 @@ observer.observe(centerItem);
   }
   // startLoader()  
 
-  const isTokenExpired = async () => {
+  const validateSession = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
-      if(res.data.expired==true) {
+      const res = await axios.get(`${baseURL}/api/session/valid`)
+      if(res.data.valid!=true) {
         await logout_user()
+        sendRequest('LOGOUT')
       }
     } catch (error) {}
   }
-  $(document).ready(isTokenExpired)
+  $(document).ready(validateSession)
 
   const startUp = async () => {
     let username = localStorage.getItem('username')

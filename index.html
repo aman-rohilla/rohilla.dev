@@ -324,13 +324,12 @@
 
         </li> -->
 
-        <li id="login-btn-div" class="nav-item nav-link mr-auto flex-column pr-0 collapse-item" style="/*display: flex;*/ display: none;">
-          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;">Login</button>
+        <li id="login-btn-div" class="nav-item nav-link mr-auto  flex-column pr-0 collapse-item" style="/*display: flex;*/ display: none;">
+          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto collapse-item" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;">Login</button>
         </li>
 
         <li id="toggle-div" class="nav-item mr-auto my-auto py-2">
-          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;" >Login</button>
-          </div>
+          <button type="button" class="btn btn-primary btn-rounded btn-sm my-auto collapse-item" data-mdb-toggle="modal" data-mdb-target="#login-modal" style="text-transform: none; letter-spacing: 1px; font-size: 14px;">Login</button>
 
 
         </li>
@@ -340,7 +339,7 @@
     <!-- </div> -->
   </nav>
   <div id="popover-content" style="display: none;">
-    <button onclick="$('.popover-div').trigger('click'); logout_user(); sendRequest('LOGOUT');" class="btn btn-danger btn-sm">Logout</button>
+    <button onclick="$('.popover-div').trigger('click'); logout_user(); sendRequest('LOGOUT'); axios.get(`${baseURL}/api/logout`);" class="btn btn-danger btn-sm">Logout</button>
   </div>
   <!-- <div style="height: 60px;"></div> -->
 
@@ -840,7 +839,8 @@
         <div class="font-weight-light mt-2 text-center"
           style="color: rgb(147, 224, 224); font-size: 1.5rem;">
           <div class="tag">
-            <i class="fa-solid fa-music"></i>
+            <!-- <i class="fa-solid fa-music"></i> -->
+            <i class="fa-solid fa-headphones"></i>
             Audiophile
           </div>
           <div class="tag ml-3" style="width: 120px;">
@@ -855,9 +855,8 @@
 
 
   <!-- <div class="row px-2 mx-0"> -->
-  <section id="skills" class="skills-section container mb-0 py-4 d-flex flex-column justify-content-center" style="
-      padding-left: 0.75rem;
-      padding-right: 0.7rem;
+  <section id="skills" class="skills-section mb-0 py-4 mx-auto" style="
+      
       margin-top: 40px !important;
       max-width: 700px; 
       /* height: 90vh; */
@@ -871,28 +870,23 @@
       <div class="mx-auto line mx-4 px-4" style="margin-bottom: 10px;">
         <hr style="height: 5px; color: lightblue;">
       </div> -->
-    <div>
-
-
-    <div class="mx-auto pb-4 mb-4" style="max-width: 500px; 
-    /* margin-bottom: 40px; */
-    /* margin-top: 40px; */
-    ">
-
-      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-4" style="
-
-      /* background-color: rgba(171, 171, 171, 0.815); */
-      background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
-      border-radius: 10rem;
-      border: 1px solid lightblue;
-      box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.911);
-      ">Skills</h2>
-    </div>
-
-
-
-
-
+    
+      <div class="mx-auto pb-4 mb-4" style="max-width: 500px; 
+      /* margin-bottom: 40px; */
+      /* margin-top: 40px; */
+      ">
+  
+        <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-5" style="
+  
+        /* background-color: rgba(171, 171, 171, 0.815); */
+        background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
+        border-radius: 10rem;
+        border: 1px solid lightblue;
+        box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.911);
+        ">Skills</h2>
+      </div>
+    
+      <div class="d-flex flex-column justify-content-center" style="padding-left: 0.75rem; padding-right: 0.7rem; align-content: center; ">
 
 
 
@@ -1017,6 +1011,8 @@
       </li>
         
     </ul>
+
+    
     </div>
   </div>
   </section>
@@ -1123,6 +1119,7 @@
     }
     .short-desc {
       color: cyan;
+      font-size: 15.6px;
     }
     .desc-text {
       font-size: 14px;
@@ -1145,12 +1142,12 @@
 
   <section id="projects" class="my-4 pt-0">
 
-    <div class="mx-auto line mx-4 px-4 pt-3" style="max-width: 500px; 
+    <div class="mx-auto line pt-3" style="max-width: 500px; 
       margin-bottom: 40px;
       margin-top: 40px;
     ">
 
-      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-4" style="
+      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-5" style="
       
       /* background-color: rgba(171, 171, 171, 0.815); */
       background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
@@ -1261,20 +1258,23 @@
             </div>
 
             <style>
-              .live-site:hover {
-                transition: all .2s ease-in;
-                /* background-color: rgba(132, 222, 132, 0.805); */
-                border: 2px solid darkcyan;
+              .live-site {
+                transition: 0.3s ease-in-out;
+                -ms-transition: 0.3s ease-in-out;
+                -webkit-transition: 0.3s ease-in-out;
               }
-              .live-site-icon:hover {
-                transition: all .2s ease-in;
-                transform: scale(1.1);
+              
+              .live-site:hover {
+                border: 2px solid darkcyan;
+                transform: rotate(-30deg);
+                -ms-transform: rotate(-30deg);
+                -webkit-transform: rotate(-30deg);
               }
             </style>
 
             <div class="logo-div text-center d-flex align-items-center justify-content-center live-site">
               <!-- <i class="prj-icon fa-solid fa-list-check fa-2xl"></i> -->
-              <a href="/task-manager" class="live-site-icon" target="_blank"><img
+              <a href="/task-manager" class="live-site-icon" target="_blank" ><img
                 src="/assets/img/icons/task-list.png" /></a>
                 <!-- src="https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-task-business-management-becris-lineal-color-becris.png" /></a> -->
             </div>
@@ -1299,7 +1299,7 @@
             <div class="desc container">
 
               <!-- <b class="short-desc"><em>Full-stack website to manage tasks through Front-end and API</em></b> <br> -->
-              <b class="short-desc"><em>Full-stack Task Manager with API</em></b> <br>
+              <b class="short-desc"><em>Full-stack Website with Multiple APIs</em></b> <br>
               <div class="desc-text" style=" text-align: left;">
                 <!-- HTML, CSS, Bootstrap, Nunjucks, JavaScript, Node.js, Express.js, MongoDB, PostgreSQL, React.js, JWT, REST API, Spring Boot -->
                 
@@ -2364,12 +2364,12 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
 
   <section id="education" class="my-4 pt-0">
 
-    <div class="mx-auto px-4 my-4 py-2" style="max-width: 500px; 
+    <div class="mx-auto my-4 py-4" style="max-width: 500px; 
     /* margin-bottom: 40px; */
     /* margin-top: 40px; */
     ">
 
-      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-4" style="
+      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-5" style="
     
     /* background-color: rgba(171, 171, 171, 0.815); */
     background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
@@ -2517,16 +2517,15 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     </div>
   </section>
 
+  <section id="contact" class="" style="padding-top: 0 !important; height: auto;">
 
-  <section id="contact" class="mx-4 d-flex justify-content-center flex-column align-items-center">
-    <div class="my-4">
-
-    <div class="mx-auto pb-4 mb-4" style="max-width: 500px; 
+    <div class="mx-auto pt-4" style="max-width: 500px; 
     /* margin-bottom: 40px; */
     /* margin-top: 40px; */
+    padding-bottom: 2.5rem;
     ">
 
-      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-4" style="
+      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-5" style="
     
     /* background-color: rgba(171, 171, 171, 0.815); */
     background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
@@ -2536,6 +2535,10 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
     ">Contact</h2>
 
     </div>
+
+    <div class="my-4 px-4 d-flex justify-content-center flex-column align-items-center">
+
+
 
     <style>
       .form-sel {
@@ -2769,6 +2772,7 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
 
   <script>
     const baseURL = 'https://rohilla-co-in.herokuapp.com'
+    axios.defaults.withCredentials = true
 
     const projects = ['tm', 'wifi', 'mdl', 'plc', 'fdl']
 
@@ -3022,7 +3026,6 @@ async function stopBtnSpinner(btn, duration=300) {
           target.reset()
           $(target).find('input').blur()
           await new Promise(resolve => setTimeout(resolve, 2000));
-          localStorage.setItem('token', res.data.token)
           localStorage.setItem('username', res.data.username)
           
           $('#login-modal').modal('hide') //// 
@@ -3092,7 +3095,6 @@ async function stopBtnSpinner(btn, duration=300) {
           target.reset()
           $(target).find('input').blur()
           await new Promise(resolve => setTimeout(resolve, 2000));
-          localStorage.setItem('token', res.data.token)
           localStorage.setItem('username', res.data.username)
           $('#signup-modal').modal('hide') //// 
           await login_user()     
@@ -3200,6 +3202,7 @@ async function stopBtnSpinner(btn, duration=300) {
     const loginBtnDiv = $('#login-btn-div')
     const toggleDiv = $('#toggle-div')
 
+    
     async function login_user() {
       const username = localStorage.getItem('username')
       if(!username) return
@@ -3264,24 +3267,22 @@ $('body').popover({
 
 $('.navbar-collapse').on('hidden.bs.collapse', function() {
   const div = $('.popover-div')
-  if (div.data('bs.popover')._activeTrigger.click == true){
+  if (div.data('bs.popover') && div.data('bs.popover')._activeTrigger.click == true){
     div.trigger('click');
   }
-
-
 }); 
 
     async function logout_user() {      
+      if(!localStorage.getItem('username'))
+        return
+
       // // $('.navbar-collapse').collapse('hide');
       // await new Promise(resolve => setTimeout(resolve, 400));
       // document.getElementById('user').style.setProperty('display', 'none')
       // document.getElementById('login-btn').style.setProperty('display', 'flex')
-      localStorage.removeItem('token')
       localStorage.removeItem('username')
       // // sendRequest('LOGOUT', 100)
       // // sendRequest()
-
-
       // // await $(userDiv).animate({opacity: 1}, {duration: 1000}).promise();
       // await $(userDiv).hide('slide', {direction: 'right'}, 500).promise();    
 
@@ -3300,30 +3301,28 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
       await $(toggleDiv).animate({opacity: 1}, {duration: 600}).promise();
 
     }
+    
 
-    const isTokenExpired = async () => {
+    const validateSession = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/token/expired`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')+'/'+localStorage.getItem('ignore')}})
-        if(res.data.expired==true) {
+        const res = await axios.get(`${baseURL}/api/session/valid`)
+
+        if(res.data.valid!=true) {
           await logout_user()
           sendRequest('LOGOUT')
         }
       } catch (error) {}
     }
-    $(document).ready(isTokenExpired)
+    $(document).ready(validateSession)
     $(document).ready(() => {
       var isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent));
       if(isMobile) $('.desc-text').css('font-size', '15px')
     })
 
-
   </script>
 
 
-
-
-
-  <script>
+<script>
     // let spin=false;
     // $('button').on('click', e => {
     //   let spinner = $(e.currentTarget).find('.spinner')
@@ -3413,7 +3412,6 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
     // $('#login-form-btn').on('click', () => document.getElementById('signup-form').reset())
 
 </script>
-
 
 
 </body>
