@@ -119,7 +119,7 @@
   </ul>
   
   
-<pre class="my-1"><strong style="font-size: 14px;">Base URL : rohilla-co-in.herokuapp.com/task-manager</strong></pre>
+<pre class="my-1"><strong style="font-size: 14px;">Base URL : api.rohilla.co.in/task-manager</strong></pre>
 <pre class="mb-0" style="font-size: 14px;">
   POST   /api     - create a task
   GET    /api/:id - get a task by id
@@ -654,7 +654,7 @@
 
   let tasks = []
 
-  const baseURL = 'https://rohilla-co-in.herokuapp.com'
+  const baseURL = 'https://api.rohilla.co.in'
   axios.defaults.withCredentials = true
 </script>
 
@@ -1303,7 +1303,7 @@ observer.observe(centerItem);
 
   async function getAllTasks() {
     try {
-      // const res = await axios.post('https://rohilla-co-in.herokuapp.com/task-manager/api')
+      // const res = await axios.post('https://api.rohilla.co.in/task-manager/api')
       errorToast.toast('hide')
       await startLoader()
       const res = await axios.get(`${baseURL}/task-manager/api`)

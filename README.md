@@ -2,4 +2,4 @@
 
 [rohilla.co.in](https://rohilla.co.in) - API Based
 
-[rohilla-co-in.herokuapp.com](https://rohilla-co-in.herokuapp.com) - Server Based
+[api.rohilla.co.in](https://api.rohilla.co.in) - Server Based
