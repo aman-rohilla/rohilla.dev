@@ -878,7 +878,7 @@
   <section id="skills" class="skills-section mb-0 py-4 mx-auto" style="
       
       margin-top: 40px !important;
-      max-width: 700px; 
+      max-width: 1300px; 
       /* height: 90vh; */
       /* border: 3px solid rgba(255, 255, 255, 0.793);  */
       /* border-radius: 15px; */
@@ -906,7 +906,7 @@
         ">Skills</h2>
       </div>
     
-      <div class="d-flex flex-column justify-content-center" style="padding-left: 0.75rem; padding-right: 0.7rem; align-content: center; ">
+      <div class="d-flex flex-column justify-content-center mt-4" style="padding-left: 2px; padding-right: 2px; align-content: center; ">
 
 
 
@@ -918,24 +918,6 @@
         }
       }
 
-      .img-div>img {
-        /* width: 50px;
-        height: 50px; */
-        width: 64px;
-        height: 64px;
-        /* display: inline-block; */
-      }
-
-      .img-div {
-        /* padding-left: 2px; */
-        /* padding-right: 2px; */
-        margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 8px;
-        margin-right: 8px;
-        width: 60px;
-        padding: 0;
-      }
       .list-sel {
         transition: all .2s ease-in; 
         padding-left: 15px;
@@ -957,80 +939,431 @@
         padding-right: 7px;
       }
 
+      
+
+      .img-div {
+        /* padding-left: 2px; */
+        /* padding-right: 2px; */
+        /* margin-top: 10px;
+        margin-bottom: 15px;
+        margin-left: 8px;
+        margin-right: 8px; */
+        /* width: 60px; */
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        /* background-color: #f1f1f1; */
+        /* display: block; */
+        /* border: 1px solid salmon; */
+        /* padding: 12px 2px; */
+        /* border-radius: 20px; */
+      }
+
+      .img-div  img {
+        /* width: 50px;
+        height: 50px; */
+        width: 64px;
+        height: 64px;
+        /* display: inline-block; */
+      }
+      
+      .img-div > img {
+        margin-bottom: 25px;
+      }
+
+      .non-square-img-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+        height: 64px;
+      }
+      .non-square-img-div > img {
+        width: auto;
+      }
+
+      .skill {
+        color: black;
+        display: inline;
+        /* background-color: rgba(211, 211, 228, 0.874); */
+        border-radius: 8px;
+        padding: 4.5px 7px;
+        /* margin-right: 6px; */
+        /* overflow: hidden; */
+      }
+
+      .lang {
+        /* background: linear-gradient(to bottom right, rgba(169, 206, 204, 0.799), rgba(97, 203, 238, 0.644)); */
+        background: linear-gradient(to bottom right, rgb(219, 243, 241), rgb(99, 182, 210));
+      }
+
+      .skill-py {
+        /* background: linear-gradient(to bottom right, rgba(202, 81, 131, 0.799), rgba(233, 159, 116, 0.692)); */
+        background: linear-gradient(to bottom right, rgb(251, 93, 159), rgb(216, 147, 107));
+      }
+      .skill-js {
+        /* background: linear-gradient(to bottom right, rgba(81, 202, 87, 0.799), rgba(91, 219, 161, 0.692)); */
+        background: linear-gradient(to bottom right, rgba(124, 214, 127, 0.864), rgba(82, 183, 138, 0.859));
+      }
+      
+      .skill-java {
+        background: linear-gradient(to bottom right, rgba(81, 202, 186, 0.799), rgba(91, 219, 108, 0.692));
+      }
+
+      .skill-dbms {
+        /* background: linear-gradient(to bottom right, rgba(81, 125, 202, 0.799), rgba(187, 91, 219, 0.692)); */
+        background: linear-gradient(to bottom right, rgb(125, 168, 241), rgb(190, 130, 210));
+      }
+
+      .skill-common {
+        /* background: linear-gradient(to bottom right, rgba(202, 81, 198, 0.799), rgba(219, 91, 112, 0.692)); */
+        background: linear-gradient(to bottom right, rgba(211, 89, 207, 0.797), rgba(213, 138, 150, 0.792));
+      }
+
+      .skill-dev {
+        background: linear-gradient(to bottom right, darkcyan, cyan);
+      }
+
+      /* .img-div {
+        border: 0.5px solid #f1f1f1;
+        padding: 20px 0px;
+        border-radius: 8px;
+      } */
+      :root {
+        --skill-column-gap: 95px;
+        --skill-row-gap: 85px;
+      }
     </style>
 
     <div class="row m-0 p-0 text-center text-center align-items-center justify-content-center mb-4">
       <!-- <div class="col col-class-1 d-flex"> -->
       <!-- <div class="row d-flex justify-content-between"> -->
+      <div class="container mx-0 px-0" style="
+        /* background-color: lightcyan; */
+        /* column-gap: 20px; */
+        /* row-gap: 35px; */
+        /* row-gap: 50px; */
 
-      <div class="img-div top" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C" style="margin-left: 0 !important;">
-        <img src="/assets/img/icons/c.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="top" title="C++">
-        <img src="/assets/img/icons/cpp.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="top" title="Python">
-        <img src="/assets/img/icons/python.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="top" title="JavaScript">
-        <img src="/assets/img/icons/javascript.png"></div>
+        column-gap: var(--skill-column-gap);
+        row-gap: var(--skill-row-gap);
+        max-width: 1300px;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill,minmax(110px, 110px));
+      ">
+
+      <div class="img-div">
+        <img src="/assets/img/icons/c.png"> <br/>
+        <div class="skill lang">C</div>
+      </div>
+      <div class="img-div">
+        <img src="/assets/img/icons/cpp.png">  <br/>
+        <div class="skill lang">C++</div>
+      </div>
+      <div class="img-div">
+        <img src="/assets/img/icons/python.png"> <br/>
+        <div class="skill lang">Python</div>
+      </div>
+      <div class="img-div">
+        <img src="/assets/img/icons/javascript.png"> <br/>
+        <div class="skill lang">JavaScript</div>
+      </div>
       <!-- </div> -->
       <!-- </div> -->
-      <div class="toggle-div"></div>
+      <!-- <div class="toggle-div"></div> -->
       <!-- <div class="col"> -->
       <!-- <div class="row d-flex justify-content-between"> -->
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="HTML">
-        <img src="/assets/img/icons/html.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="CSS">
-        <img src="/assets/img/icons/css.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Java">
-        <img src="/assets/img/icons/java.png"></div>
-      <div class="img-div" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dart" tip-atrs="bottom" style="margin-right: 0 !important;">
-        <img src="/assets/img/icons/dart.png"></div>
-      <!-- </div> -->
-      <!-- </div> -->
-    </div>
-    <ul class="list-group mt-1">
+      <div class="img-div">
+        <img src="/assets/img/icons/html.png"> <br/>
+        <div class="skill lang">HTML</div>
+      </div>
+      <div class="img-div">
+        <img src="/assets/img/icons/css.png"> <br/>
+        <div class="skill lang">CSS</div>
+      </div>
+      <div class="img-div">
+        <img src="/assets/img/icons/java.png"> <br/>
+        <div class="skill lang">Java</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="/assets/img/icons/dart.png">  <br/>
+        <div class="skill lang">Dart</div>
+      </div>
 
-      <li class="list-sel list-group-item list-group-item-primary">
-        Data Structures, Algorithms, Problem Solving
-      </li>
-      
-      <li class="list-sel list-group-item list-group-item-secondary">
-        Django, Flask, Web Scraping, Jinja
-        <!-- , Selenium -->
-      </li>
-    
-      <li class="list-sel list-group-item list-group-item-success">
-        Node.js, Express.js, React.js, jQuery, Nunjucks
-      </li>
-    
-      <li class="list-sel list-group-item list-group-item-warning">
-        SQL, NoSQL, SQLAlchemy, Mongoose, JDBC
-      </li>
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/240/null/flutter.png"/> <br/>
+        <div class="skill lang">Flutter</div>
+      </div>
 
-      <li class="list-sel list-group-item list-group-item-info">
-        SQLite, MongoDB, PostgreSQL
-      </li>
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/96/null/bash.png"> <br/>
+        <div class="skill lang" style="margin-left: -2px;">ShellScripting</div>
+      </div>
       
-      <li class="list-sel list-group-item list-group-item-light">
-        OOP, REST API, JSON, Regex
-      </li>
       
-      <li class="list-sel list-group-item list-group-item-danger">
-        Flutter, Bootstrap, Spring Boot
-      </li>
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" style="height: 35px; border-radius: 10px;" > 
+        </div>
+        <div class="skill skill-py">Django</div>
+      </div>
       
-      <li class="list-sel list-group-item list-group-item-dark" style="background-color: #f1f1f1;">
-        User Authentication, OAuth
-      </li>
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/nolan/256/flask.png" style="height: 85px;" > 
+        </div>
+        <div class="skill skill-py">Flask</div>
+      </div>
       
-      <li class="list-sel list-group-item list-group-item-primary">
-        Multithreading, Multiprocessing
-      </li>
+      <div class="img-div">
+        <img src="/assets/img/icons/jinja.png" style="filter: invert(80%);"> <br/>
+        <div class="skill skill-py">Jinja</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/96/null/selenium-test-automation.png"> <br/>
+        <div class="skill skill-py">Selenium</div>
+      </div>
+            
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/96/null/external-nodejs-is-an-open-source-cross-platform-javascript-run-time-environment-logo-shadow-tal-revivo.png" style="height: 48px; width: auto"> 
+        </div>
+        <div class="skill skill-js">Node.js</div>
+      </div>
+      
+      
+      <div class="img-div">
+        <img src="https://www.pngfind.com/pngs/b/136-1363736_pc-master-race-png.png" style="filter: invert(100%);"> <br/>
+        <div class="skill skill-js">Express.js</div>
+      </div>
+            
+      <div class="img-div">
+        <img src="https://img.icons8.com/plasticine/100/null/react.png"> <br/>
+        <div class="skill skill-js">React.js</div>
+      </div>
+            
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/96/null/external-jquery-is-a-javascript-library-designed-to-simplify-html-logo-color-tal-revivo.png" style="height: 48px;"> 
+        </div>
+        <div class="skill skill-js">jQuery</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/240/null/bootstrap.png" /> <br/>
+        <div class="skill skill-js">Bootstrap</div>
+      </div>
 
-      <li class="list-sel list-group-item list-group-item-secondary">
-        Git, Linux, Windows, Android, File System
-      </li>
+      <div class="img-div">
+        <img src="/assets/img/icons/nunjucks.png" style="border-radius: 20px;" > <br/>
+        <div class="skill skill-js">Nunjucks</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://user-images.githubusercontent.com/10379601/29446482-04f7036a-841f-11e7-9872-91d1fc2ea683.png" > 
+        </div>
+        <div class="skill skill-js">Puppeteer</div>
+      </div>
+      
+
+      <div class="img-div">
+        <img src="https://img.icons8.com/fluency/96/null/data-configuration.png" > <br/>
+        <div class="skill skill-dbms">DBMS</div>
+      </div>
+      
+
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/96/null/sql.png"> <br/>
+        <div class="skill skill-dbms">SQL</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://busi.eu/app/uploads/2020/02/NoSQL.jpg" style="border-radius: 10px; height: 57px;"> 
+        </div>
+        <div class="skill skill-dbms">NoSQL</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="https://pbs.twimg.com/profile_images/476392134489014273/q5uAkmy7_400x400.png" style="border-radius: 10px;"> <br/>
+        <div class="skill skill-dbms" style="margin-left: -1.5px;">SQLAlchemy</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/color/240/null/mongoose.png" style="height: 96px;"> 
+        </div>
+        <div class="skill skill-dbms">Mongoose</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/jdbc.png" style="height: 96px;"> 
+        </div>
+        <div class="skill skill-dbms">JDBC</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/sqlite.png" style="height: 60px;"> 
+        </div>
+        <div class="skill skill-dbms">SQLite</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/mongodb.png" style="height: 70px;"> 
+        </div>  
+        <div class="skill skill-dbms">MongoDB</div>
+      </div>
+
+      <div class="img-div">
+        <img src="/assets/img/icons/postgresql.png"> <br/>
+        <div class="skill skill-dbms">PostgreSQL</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/spring-boot.png" style="height: 80px;" /> 
+        </div>
+        <div class="skill skill-java">Spring Boot</div>
+      </div>
+
+      <div class="img-div">
+        <img src="https://img.icons8.com/fluency/96/null/api-settings.png"> <br/>
+        <div class="skill skill-common">REST API</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="/assets/img/icons/json.png"> <br/>
+        <div class="skill skill-common">JSON</div>
+      </div>
+
+      <div class="img-div">
+        <img src="/assets/img/icons/regex.png" style="filter: invert(80%);" /> <br/>
+        <div class="skill skill-common">RegEx</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/bubbles/100/null/enter-2.png" style="height: 80px;" /> 
+        </div>
+        <div class="skill skill-common" style="margin-left: -3.5px;">Authentication</div>
+      </div>
+
+      <div class="img-div">
+        <img src="/assets/img/icons/oauth.svg" /> <br/>
+        <div class="skill skill-common">OAuth</div>
+      </div>
+
+      <div class="img-div">
+        <img src="https://img.icons8.com/color/240/null/java-web-token.png" /> <br/>
+        <div class="skill skill-common">JWT</div>
+      </div>
+      
+      <div class="img-div">
+        <img src="https://static.thenounproject.com/png/1326835-200.png" style="filter: invert(80%);" /> <br/>
+        <div class="skill skill-common" style="margin-left: -4px;">Multithreading</div>
+      </div>
+      
+      <div class="img-div">
         
-    </ul>
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/multiprocessing.png" style="border-radius: 10px; background-color: #f1f1f1; height: 60px;" /> 
+        </div>
+        <div class="skill skill-common" style="margin-left: -8px;">Multiprocessing</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/color/240/null/git.png" style="height: 70px;"/> 
+        </div>
+        <div class="skill skill-dev">Git</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/bubbles/100/null/github.png" style="height: 80px;" /> 
+        </div>
+        <div class="skill skill-dev">GitHub</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/color/96/null/linux--v1.png" style="height: 80px;" /> 
+        </div>
+        <div class="skill skill-dev">Linux</div>
+      </div>
+      
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/fluency/240/null/windows-10.png" style="height: 70px;" /> 
+        </div>
+        <div class="skill skill-dev">Windows</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/android.png" /> 
+        </div>
+        <div class="skill skill-dev">Android</div>
+      </div>
+
+      <div class="img-div">
+        <div class="non-square-img-div">
+          <img src="https://img.icons8.com/color/240/null/visual-studio-code-2019.png" /> 
+        </div>
+        <div class="skill skill-dev">VS Code</div>
+      </div>
+      
+      </div>
+
+    </div>
+
+    <style>
+      .list-sel > div, .no-skill-image > div {
+        display: inline-block;
+        /* background-color: rgba(211, 211, 228, 0.874); */
+        background: linear-gradient(to bottom right, rgba(132, 220, 197, 0.799),
+         rgba(152, 239, 180, 0.644));
+        border-radius: 10px;
+        padding: 4px 5px;
+        margin-right: 6px;
+        /* height: 50px !important; */
+        color: black;
+        /* word-wrap: none; */
+        margin-top: 10px;
+      }
+
+
+    </style>
+
+    <!-- <ul class="list-group mt-1"> -->
+
+      <!-- <li class="list-sel list-group-item list-group-item-success" style=""> -->
+      <div class="no-skill-image px-3 mt-4" >
+        <div>Data Structures</div>
+        <div>Algorithms</div>
+        <div>DBMS</div>
+        <div>OOP</div>
+        <div>Problem Solving</div>
+        <div>User Authentication</div>
+        <div>Stripe Payment API</div>
+        <div>Django Rest Framework</div>
+        <div>Web Scraping</div>
+        <div>File System</div>
+        <div>Android Development</div>
+        <div>Backend Development</div>
+        <div>Web Development</div>
+        <div>Software Development</div>
+      </div>
+      <!-- </li>         -->
+    <!-- </ul> -->
 
     
     </div>
@@ -2384,163 +2717,105 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
 
 
 
+<style>
+  .edu {
+    /* background-color: rgba(115, 115, 115, 0.612); */
+    /* background: radial-gradient(
+        rgba(255, 255, 255, 0.752),
+        rgba(173, 216, 230, 0.789)
+      ); */
 
-  <section id="education" class="my-4 pt-0">
+      /* rgba(173, 216, 230, 0.833), */
+    /* background: radial-gradient(
+      rgba(144, 238, 144, 0.673) 20%,
+      rgba(240, 128, 128, 0.816),
+      rgba(220, 20, 60, 0.681));
+    box-shadow: lightcoral 0px 8px 14px, inset 0 0 6px lightpink;
+    border: 1px solid lightsalmon; */
 
-    <div class="mx-auto my-4 py-4" style="max-width: 500px; 
-    /* margin-bottom: 40px; */
-    /* margin-top: 40px; */
-    ">
 
-      <h2 class="section-title text-center text-uppercase text-light my-0 py-2 mx-5" style="
-    
-    /* background-color: rgba(171, 171, 171, 0.815); */
-    background-image: linear-gradient(to right , rgba(24, 24, 24, 0.722), rgba(72, 72, 72, 0.7));
-    border-radius: 10rem;
+    background: radial-gradient(
+      /* rgba(103, 203, 173, 0.673) 10%, */
+      darkcyan 10%,
+      teal,
+      #02526f
+      );
+    box-shadow: lightblue 0px 8px 14px, inset 0 0 6px lightpink;
     border: 1px solid lightblue;
-    box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.911);
-    ">Education</h2>
-
-    </div>
-
-    <div class="row m-0 p-0 justify-content-center my-4 text-center">
 
 
-      <style>
-        .edu {
-          /* background-color: rgba(115, 115, 115, 0.612); */
-          /* background: radial-gradient(
-              rgba(255, 255, 255, 0.752),
-              rgba(173, 216, 230, 0.789)
-            ); */
-
-            /* rgba(173, 216, 230, 0.833), */
-          /* background: radial-gradient(
-            rgba(144, 238, 144, 0.673) 20%,
-            rgba(240, 128, 128, 0.816),
-            rgba(220, 20, 60, 0.681));
-          box-shadow: lightcoral 0px 8px 14px, inset 0 0 6px lightpink;
-          border: 1px solid lightsalmon; */
+    border-radius: 30px !important;
+    width: 320px;
+    height: 350px;
+    text-align: center;
+    transition: all .3s ease-in;
+  }
+  .edu:hover {
+    transform: scale(1.03);
+    /* box-shadow: lightcoral 0px 8px 14px, inset 0 0 6px lightpink, inset 0 0 14px lightsalmon !important; */
+    box-shadow: lightblue 0px 4px 14px, inset 0 0 14px black;
+    /* , inset 0 0 14px lightsalmon !important; */
+    cursor: pointer;
+  }
 
 
-          background: radial-gradient(
-            /* rgba(103, 203, 173, 0.673) 10%, */
-            darkcyan 10%,
-            teal,
-            #02526f
-            );
-          box-shadow: lightblue 0px 8px 14px, inset 0 0 6px lightpink;
-          border: 1px solid lightblue;
+  /* .edu-2 {
+    background: radial-gradient(
+        rgba(173, 216, 230, 0.833),
+        rgba(144, 238, 144, 0.673) 20%,
+        rgba(240, 128, 128, 0.816),
+        rgba(220, 20, 60, 0.681));
+    } */
+
+  /* .degree:hover { */
+    /* box-shadow: inset 0 0 14px white !important; */
+    /* transition: transform .2s;
+    transform: scale(1.01);  
+    border: 1px solid white; */
+
+    /* transition: transform .2s; */
+    /* transform: scale(1.01);   */
+    /* border: 1px solid black; */
+  /* } */
+
+  .edu-title {
+    color: rgb(249, 250, 251);
+    font-size: 1.7rem;
+    margin-top: 10px !important;
+  }
 
 
-          border-radius: 30px !important;
-          width: 320px;
-          height: 350px;
-          text-align: center;
-          transition: all .3s ease-in;
-        }
-        .edu:hover {
-          transform: scale(1.03);
-          /* box-shadow: lightcoral 0px 8px 14px, inset 0 0 6px lightpink, inset 0 0 14px lightsalmon !important; */
-          box-shadow: lightblue 0px 4px 14px, inset 0 0 14px black;
-          /* , inset 0 0 14px lightsalmon !important; */
-          cursor: pointer;
-        }
+  .edu-middle {
+    font-size: 1.4rem;
+    color: lightgoldenrodyellow;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+  .edu-middle > div {
+    display: inline;
+  }
+  .edu-middle > div:hover {
+    cursor: pointer;
+    color: gold;
+  }
 
-        .edu-title {
-          color: rgb(249, 250, 251);
-          font-size: 2rem;
-        }
+  .edu-bottom {
+    font-size: 1.2rem;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.841);
+    /* background-color: rgba(255, 160, 122, 0.589); */
+    /* background-color: rgba(188, 224, 236, 0.452); */
+    background: linear-gradient(to bottom right, 
+    rgba(191, 206, 213, 0.799),
+    rgba(150, 176, 158, 0.799),
+    rgba(77, 168, 157, 0.851));
+    
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
 
-        /* .edu-2 {
-          background: radial-gradient(
-              rgba(173, 216, 230, 0.833),
-              rgba(144, 238, 144, 0.673) 20%,
-              rgba(240, 128, 128, 0.816),
-              rgba(220, 20, 60, 0.681));
-          } */
-
-        /* .degree:hover { */
-          /* box-shadow: inset 0 0 14px white !important; */
-          /* transition: transform .2s;
-          transform: scale(1.01);  
-          border: 1px solid white; */
-
-          /* transition: transform .2s; */
-          /* transform: scale(1.01);   */
-          /* border: 1px solid black; */
-        /* } */
-      </style>
-      <div class="col-auto mx-3">
-        <div class="edu my-4 py-3 px-4">
-
-          <div class="">
-            <!-- <img class="img-fluid rounded bg-light" width="100px" height="100px"
-              src="https://img.icons8.com/external-others-maxicons/62/000000/external-college-high-school-others-maxicons-15.png" /> -->
-            <img class="img-fluid rounded bg-light" width="100px" height="100px"
-              src="/assets/img/icons/graduation.png" />
-          </div>
-
-          <div class="my-2 edu-title">
-            Graduation
-          </div>
-          <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div>
-
-          <div class="mb-2" style="font-size: 1.5rem; color: lightgoldenrodyellow;">
-            IIT Mandi
-          </div>
-
-          <div class="py-1 px-3 degree" style="
-        font-size: 1.2rem;
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.841);
-        /* background-color: rgba(255, 160, 122, 0.589); */
-        background-color: rgba(188, 224, 236, 0.452);
-        border-radius: 25px;
-        ">
-            Bachelor of Technology
-            <br>
-            Electrical Engineering
-          </div>
-
-        </div>
-      </div>
-
-
-
-      <div class="col-auto mx-3">
-        <div class="edu my-4 edu-2 py-3 px-4">
-
-          <div class="">
-            <img class="img-fluid rounded bg-light" width="100px" height="100px"
-              src="/assets/img/icons/school.png" />
-              <!-- src="https://img.icons8.com/color/96/000000/school-building.png" /> -->
-          </div>
-
-          <div class="my-2 edu-title">
-            Schooling
-          </div>
-          <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div>
-
-          <div class="" style="font-size: 1.5rem;
-        color: lightgoldenrodyellow;
-        ">
-            M.V.M Sr. Sec. School
-            <br>
-            Gangwa, Hisar, Haryana
-          </div>
-
-          <!-- <div class="bg-light pt-1" style="font-size: 1.3rem;">
-          
-        </div> -->
-
-        </div>
-      </div>
-
-
-    </div>
-  </section>
-
+</style>
 
 
 
@@ -2566,39 +2841,37 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
 
     <div class="row m-0 p-0 justify-content-center my-4 text-center">
 
-      <div class="col-auto mx-3">
-        <div class="edu my-4 py-3 px-4" onclick="window.open('https://www.broadridge.com', '_blank')">
+      <div class="col-auto px-0 mx-3">
+        <div class=" my-4 py-3 px-4">
 
           <div class="">
-            <!-- <img class="img-fluid rounded bg-light" width="100px" height="100px"
+            <!-- <img class="img-fluid rounded bg-light" width="80px" height="80px"
               src="https://img.icons8.com/external-others-maxicons/62/000000/external-college-high-school-others-maxicons-15.png" /> -->
               <!-- src="https://img.icons8.com/fluency/96/null/hard-working.png" /> -->
               <!-- src="https://img.icons8.com/plasticine/100/null/client-company.png" /> -->
               <!-- src="https://img.icons8.com/external-flatart-icons-lineal-color-flatarticons/64/null/external-employee-work-from-home-flatart-icons-lineal-color-flatarticons.png" /> -->
-              <img class="img-fluid rounded bg-light" width="100px" height="100px"
+              <img class="img-fluid rounded bg-light" width="80px" height="80px"
                 src="/assets/img/icons/work.png" />
                 
           </div>
 
           <div class="my-2 edu-title">
-            Experience
+            <div class="px-1" style="border-bottom: 1.5px solid white; display: inline; padding-bottom: 10px;">
+              Experience
+            </div>
           </div>
-          <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div>
+          <!-- <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div> -->
 
-          <div class="mb-2" style="font-size: 1.5rem; color: lightgoldenrodyellow;">
-            Broadridge
+          <div class="edu-middle" onclick="window.open('https://www.broadridge.com', '_blank')">
+            <div>
+              Broadridge 
+              <i class="fa-solid fa-arrow-up-right-from-square fa-sm" style="color: aquamarine;"></i>
+            </div>
           </div>
 
-          <div class="py-1 px-2 degree" style="
-        font-size: 1.2rem;
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.841);
-        /* background-color: rgba(255, 160, 122, 0.589); */
-        background-color: rgba(188, 224, 236, 0.452);
-        border-radius: 10px;
-        ">
+          <div class="py-1 px-2 edu-bottom">
             Associate Software Engineer <br>
-            <div style="font-size: 1.1rem; color: #003548;">
+            <div style="font-size: 1.1rem; color: #4ff3b9;">
               November, 2022 - Present
             </div>
           </div>
@@ -2606,36 +2879,35 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
         </div>
       </div>
 
-      <div class="col-auto mx-3">
-        <div class="edu my-4 py-3 px-4" onclick="window.open('http://iitmandi.ac.in', '_blank')">
+      <div class="col-auto px-0 mx-3">
+        <div class=" my-4 py-3 px-4">
 
           <div class="">
-            <!-- <img class="img-fluid rounded bg-light" width="100px" height="100px"
+            <!-- <img class="img-fluid rounded bg-light" width="80px" height="80px"
               src="https://img.icons8.com/external-others-maxicons/62/000000/external-college-high-school-others-maxicons-15.png" /> -->
-            <img class="img-fluid rounded bg-light" width="100px" height="100px"
+            <img class="img-fluid rounded bg-light" width="80px" height="80px"
               src="/assets/img/icons/graduation.png" />
           </div>
 
           <div class="my-2 edu-title">
-            Graduation
+            <div class="px-1" style="border-bottom: 1.5px solid white; display: inline; padding-bottom: 10px;">
+              Graduation
+            </div>
           </div>
-          <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div>
+          <!-- <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div> -->
 
-          <div class="mb-2" style="font-size: 1.5rem; color: lightgoldenrodyellow;">
-            IIT Mandi
+          <div class="edu-middle" onclick="window.open('http://iitmandi.ac.in', '_blank')">
+            <div>
+              IIT Mandi
+              <i class="fa-solid fa-arrow-up-right-from-square fa-sm" style="color: aquamarine;"></i>
+            </div>
           </div>
 
-          <div class="py-1 px-3 degree" style="
-        font-size: 1.2rem;
-        display: inline-block;
-        color: rgba(0, 0, 0, 0.841);
-        /* background-color: rgba(255, 160, 122, 0.589); */
-        background-color: rgba(188, 224, 236, 0.452);
-        border-radius: 10px;
-        ">
-            Bachelor of Technology
-            <br>
-            Electrical Engineering
+          <div class="py-1 px-2 edu-bottom">
+            Bachelor of Technology<br>
+            <div style="font-size: 1.1rem; color: #4ff3b9;">
+              Electrical Engineering
+            </div>
           </div>
 
         </div>
@@ -2643,26 +2915,29 @@ Spotify-to-Deezer.exe spy-playlist-link --client your-clientID:your-client-secre
 
 
 
-      <div class="col-auto mx-3">
-        <div class="edu my-4 edu-2 py-3 px-4" onclick="window.open('https://mvmhissar.org', '_blank')">
+      <div class="col-auto px-0 mx-3">
+        <div class=" my-4 edu-2 py-3 px-4">
 
           <div class="">
-            <img class="img-fluid rounded bg-light" width="100px" height="100px"
+            <img class="img-fluid rounded bg-light" width="80px" height="80px"
               src="/assets/img/icons/school.png" />
               <!-- src="https://img.icons8.com/color/96/000000/school-building.png" /> -->
           </div>
 
           <div class="my-2 edu-title">
-            Schooling
-          </div>
-          <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div>
+            <div class="px-1" style="border-bottom: 1.5px solid white; display: inline; padding-bottom: 10px;">
+              Schooling
+            </div>
 
-          <div class="" style="font-size: 1.5rem;
-        color: lightgoldenrodyellow;
-        ">
-            M.V.M Sr. Sec. School
-            <br>
-            Gangwa, Hisar, Haryana
+          </div>
+          <!-- <div class="container bg-light mb-3" style="height: 1.5px; width: 60%;"></div> -->
+
+          <div class="edu-middle" onclick="window.open('https://mvmhissar.org', '_blank')">
+            <div>
+              M.V.M Sr. Sec. School<br>
+              Gangwa, Hisar, Haryana
+              <i class="fa-solid fa-arrow-up-right-from-square fa-sm" style="color: aquamarine;"></i>
+            </div>
           </div>
 
           <!-- <div class="bg-light pt-1" style="font-size: 1.3rem;">
@@ -3481,6 +3756,21 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
       var isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent));
       if(isMobile) $('.desc-text').css('font-size', '15px')
     })
+
+
+    function changeSkillRowColumnGap(x) {
+      if (x.matches) {
+        document.documentElement.style.setProperty('--skill-column-gap', '95px')
+        document.documentElement.style.setProperty('--skill-row-gap', '85px')
+      } else {
+        document.documentElement.style.setProperty('--skill-column-gap', '20px')
+        document.documentElement.style.setProperty('--skill-row-gap', '50px')
+      }
+    }
+
+    var x = window.matchMedia('(min-width: 700px)')
+    changeSkillRowColumnGap(x)
+    x.addListener(changeSkillRowColumnGap)
 
   </script>
 
