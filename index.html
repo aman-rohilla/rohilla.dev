@@ -938,7 +938,6 @@
         padding-left: 7px;
         padding-right: 7px;
       }
-
       
 
       .img-div {
@@ -962,8 +961,8 @@
       .img-div  img {
         /* width: 50px;
         height: 50px; */
-        width: 64px;
-        height: 64px;
+        width: var(--skill-img-size);
+        height: var(--skill-img-size);
         /* display: inline-block; */
       }
       
@@ -977,7 +976,7 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 25px;
-        height: 64px;
+        height: var(--skill-img-size);
       }
       .non-square-img-div > img {
         width: auto;
@@ -1033,6 +1032,17 @@
         border-radius: 8px;
       } */
       :root {
+        --skill-img-size-large: 70px;
+        --skill-img-size-small: 64px;
+        --skill-img-size: 70px;
+
+
+        --skill-column-gap-large: 100px;
+        --skill-row-gap-large: 90px;
+
+        --skill-column-gap-small: 20px;
+        --skill-row-gap-small: 50px;
+
         --skill-column-gap: 95px;
         --skill-row-gap: 85px;
       }
@@ -1107,14 +1117,14 @@
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/django.png" style="height: 35px; border-radius: 10px;" > 
+          <img src="/assets/img/icons/django.png" style="height: calc(var(--skill-img-size) * 0.55); border-radius: 10px;" > 
         </div>
         <div class="skill skill-py">Django</div>
       </div>
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/flask.png" style="height: 85px;" > 
+          <img src="/assets/img/icons/flask.png" style="height: calc(var(--skill-img-size) * 1.33);" > 
         </div>
         <div class="skill skill-py">Flask</div>
       </div>
@@ -1132,7 +1142,7 @@
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/node.png" style="height: 48px; width: auto"> 
+          <img src="/assets/img/icons/node.png" style="height: calc(var(--skill-img-size) * 0.9); width: auto"> 
         </div>
         <div class="skill skill-js">Node.js</div>
       </div>
@@ -1144,13 +1154,15 @@
       </div>
             
       <div class="img-div">
-        <img src="/assets/img/icons/react.png"> <br/>
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/react.png" style="height: calc(var(--skill-img-size) * 1.2);">
+        </div>
         <div class="skill skill-js">React.js</div>
       </div>
             
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/jquery.png" style="height: 48px;"> 
+          <img src="/assets/img/icons/jquery.png" style="height: calc(var(--skill-img-size) * 0.8);"> 
         </div>
         <div class="skill skill-js">jQuery</div>
       </div>
@@ -1174,7 +1186,9 @@
       
 
       <div class="img-div">
-        <img src="/assets/img/icons/dbms.png" > <br/>
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/dbms.png" style="height: calc(var(--skill-img-size) * 1.1);">
+        </div>
         <div class="skill skill-dbms">DBMS</div>
       </div>
       
@@ -1186,40 +1200,43 @@
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/no-sql.jpg" style="border-radius: 10px; height: 57px;"> 
+          <img src="/assets/img/icons/no-sql.jpg" style="border-radius: 10px; height: calc(var(--skill-img-size) * 0.8);"> 
         </div>
         <div class="skill skill-dbms">NoSQL</div>
       </div>
       
       <div class="img-div">
-        <img src="/assets/img/icons/sqlalchemy.png" style="border-radius: 10px;"> <br/>
+
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/sqlalchemy.png" style="border-radius: 10px; height: calc(var(--skill-img-size) * 0.85);">
+        </div>
         <div class="skill skill-dbms" style="margin-left: -1.5px;">SQLAlchemy</div>
       </div>
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/mongoose.png" style="height: 96px;"> 
+          <img src="/assets/img/icons/mongoose.png" style="height: calc(var(--skill-img-size) * 1.5);"> 
         </div>
         <div class="skill skill-dbms">Mongoose</div>
       </div>
 
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/jdbc.png" style="height: 96px;"> 
+          <img src="/assets/img/icons/jdbc.png" style="height: calc(var(--skill-img-size) * 1.5);"> 
         </div>
         <div class="skill skill-dbms">JDBC</div>
       </div>
 
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/sqlite.png" style="height: 60px;"> 
+          <img src="/assets/img/icons/sqlite.png" style="height: calc(var(--skill-img-size) * 0.94);"> 
         </div>
         <div class="skill skill-dbms">SQLite</div>
       </div>
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/mongodb.png" style="height: 70px;"> 
+          <img src="/assets/img/icons/mongodb.png" style="height: calc(var(--skill-img-size) * 1.2);"> 
         </div>  
         <div class="skill skill-dbms">MongoDB</div>
       </div>
@@ -1231,7 +1248,7 @@
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/spring-boot.png" style="height: 80px;" /> 
+          <img src="/assets/img/icons/spring-boot.png" style="height: calc(var(--skill-img-size) * 1.3);" /> 
         </div>
         <div class="skill skill-java">Spring Boot</div>
       </div>
@@ -1242,7 +1259,9 @@
       </div>
       
       <div class="img-div">
-        <img src="/assets/img/icons/json.png"> <br/>
+        <div class="non-square-img-div">
+          <img src="/assets/img/icons/json.png" style="height: calc(var(--skill-img-size) * 0.9);">
+        </div>
         <div class="skill skill-common">JSON</div>
       </div>
 
@@ -1253,7 +1272,7 @@
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/authentication.png" style="height: 80px;" /> 
+          <img src="/assets/img/icons/authentication.png" style="height: calc(var(--skill-img-size) * 1.25);" /> 
         </div>
         <div class="skill skill-common" style="margin-left: -3.5px;">Authentication</div>
       </div>
@@ -1276,35 +1295,35 @@
       <div class="img-div">
         
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/multiprocessing.png" style="border-radius: 10px; background-color: #f1f1f1; height: 60px;" /> 
+          <img src="/assets/img/icons/multiprocessing.png" style="border-radius: 10px; background-color: #f1f1f1; height: calc(var(--skill-img-size) * 0.84);" /> 
         </div>
         <div class="skill skill-common" style="margin-left: -8px;">Multiprocessing</div>
       </div>
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/git.png" style="height: 70px;"/> 
+          <img src="/assets/img/icons/git.png" style="height: calc(var(--skill-img-size) * 1.2);"/> 
         </div>
         <div class="skill skill-dev">Git</div>
       </div>
 
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/github.png" style="height: 80px;" /> 
+          <img src="/assets/img/icons/github.png" style="height: calc(var(--skill-img-size) * 1.25);" /> 
         </div>
         <div class="skill skill-dev">GitHub</div>
       </div>
 
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/linux.png" style="height: 80px;" /> 
+          <img src="/assets/img/icons/linux.png" style="height: calc(var(--skill-img-size) * 1.25)" /> 
         </div>
         <div class="skill skill-dev">Linux</div>
       </div>
       
       <div class="img-div">
         <div class="non-square-img-div">
-          <img src="/assets/img/icons/windows.png" style="height: 70px;" /> 
+          <img src="/assets/img/icons/windows.png" style="height: calc(var(--skill-img-size) * 1.1);" /> 
         </div>
         <div class="skill skill-dev">Windows</div>
       </div>
@@ -3769,26 +3788,23 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
 
     function changeSkillRowColumnGap(x) {
       if (x.matches) {
-        document.documentElement.style.setProperty('--skill-column-gap', '95px')
-        document.documentElement.style.setProperty('--skill-row-gap', '85px')
+        document.documentElement.style.setProperty('--skill-column-gap', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-column-gap-large'))
+        document.documentElement.style.setProperty('--skill-row-gap', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-row-gap-large'))
         
-        document.querySelector('.no-skill-image').style.setProperty('text-align', 'center')
+        document.documentElement.style.setProperty('--skill-img-size', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-img-size-large'))
+        
       } else {
-        document.documentElement.style.setProperty('--skill-column-gap', '20px')
-        document.documentElement.style.setProperty('--skill-row-gap', '50px')
-        document.querySelector('.no-skill-image').style.setProperty('text-align', 'left')
+        document.documentElement.style.setProperty('--skill-column-gap', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-column-gap-small'))
+        document.documentElement.style.setProperty('--skill-row-gap', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-row-gap-small'))
+        
+        document.documentElement.style.setProperty('--skill-img-size', window.getComputedStyle(document.documentElement).getPropertyValue('--skill-img-size-small'))
       }
     }
 
     function changeNoImageSkillAlignment(x) {
       if (x.matches) {
-        document.documentElement.style.setProperty('--skill-column-gap', '95px')
-        document.documentElement.style.setProperty('--skill-row-gap', '85px')
-
         document.querySelector('.no-skill-image').style.setProperty('text-align', 'center')
       } else {
-        document.documentElement.style.setProperty('--skill-column-gap', '20px')
-        document.documentElement.style.setProperty('--skill-row-gap', '50px')
         document.querySelector('.no-skill-image').style.setProperty('text-align', 'left')
       }
     }
