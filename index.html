@@ -1335,7 +1335,8 @@
         background: linear-gradient(to bottom right, rgb(132, 198, 198), rgb(14, 212, 212));
         border-radius: 10px;
         background: linear-gradient(to bottom right, rgba(35, 157, 209, 0.881), rgba(131, 247, 168, 0.826));
-        padding: 4px 5px;
+        /* padding: 4px 5px; */
+        padding: 4px 8px;
         margin-right: 6px;
         /* height: 50px !important; */
         color: black;
@@ -1349,7 +1350,10 @@
     <!-- <ul class="list-group mt-1"> -->
 
       <!-- <li class="list-sel list-group-item list-group-item-success" style=""> -->
-      <div class="no-skill-image px-3 mt-4" >
+      <div class="no-skill-image px-2 mt-4 mx-auto" style="max-width: 900px; 
+      /* background-color: #f1f1f1; */
+      text-align: center;
+      " >
         <div>Data Structures</div>
         <div>Algorithms</div>
         <div>DBMS</div>
@@ -3767,15 +3771,34 @@ $('.navbar-collapse').on('hidden.bs.collapse', function() {
       if (x.matches) {
         document.documentElement.style.setProperty('--skill-column-gap', '95px')
         document.documentElement.style.setProperty('--skill-row-gap', '85px')
+        
+        document.querySelector('.no-skill-image').style.setProperty('text-align', 'center')
       } else {
         document.documentElement.style.setProperty('--skill-column-gap', '20px')
         document.documentElement.style.setProperty('--skill-row-gap', '50px')
+        document.querySelector('.no-skill-image').style.setProperty('text-align', 'left')
+      }
+    }
+
+    function changeNoImageSkillAlignment(x) {
+      if (x.matches) {
+        document.documentElement.style.setProperty('--skill-column-gap', '95px')
+        document.documentElement.style.setProperty('--skill-row-gap', '85px')
+
+        document.querySelector('.no-skill-image').style.setProperty('text-align', 'center')
+      } else {
+        document.documentElement.style.setProperty('--skill-column-gap', '20px')
+        document.documentElement.style.setProperty('--skill-row-gap', '50px')
+        document.querySelector('.no-skill-image').style.setProperty('text-align', 'left')
       }
     }
 
     var x = window.matchMedia('(min-width: 700px)')
+    var y = window.matchMedia('(min-width: 550px)')
     changeSkillRowColumnGap(x)
+    changeNoImageSkillAlignment(y)
     x.addListener(changeSkillRowColumnGap)
+    y.addListener(changeNoImageSkillAlignment)
 
   </script>
 
